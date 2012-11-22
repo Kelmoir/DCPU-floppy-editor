@@ -1,0 +1,9 @@
+C:\Users\Kelmoir\Documents\Visual Studio 2008\Projects\DCPU floppy editor\DCPU floppy editor\obj\Debug\ResolveAssemblyReference.cache
+C:\Users\Kelmoir\Documents\Visual Studio 2008\Projects\DCPU floppy editor\DCPU floppy editor\obj\Debug\DCPU_floppy_editor.mainForm.resources
+C:\Users\Kelmoir\Documents\Visual Studio 2008\Projects\DCPU floppy editor\DCPU floppy editor\obj\Debug\DCPU_floppy_editor.NewFloppyWizard.resources
+C:\Users\Kelmoir\Documents\Visual Studio 2008\Projects\DCPU floppy editor\DCPU floppy editor\obj\Debug\DCPU_floppy_editor.Properties.Resources.resources
+C:\Users\Kelmoir\Documents\Visual Studio 2008\Projects\DCPU floppy editor\DCPU floppy editor\obj\Debug\DCPU floppy editor.csproj.GenerateResource.Cache
+C:\Users\Kelmoir\Documents\Visual Studio 2008\Projects\DCPU floppy editor\DCPU floppy editor\bin\Debug\DCPU floppy editor.exe
+C:\Users\Kelmoir\Documents\Visual Studio 2008\Projects\DCPU floppy editor\DCPU floppy editor\bin\Debug\DCPU floppy editor.pdb
+C:\Users\Kelmoir\Documents\Visual Studio 2008\Projects\DCPU floppy editor\DCPU floppy editor\obj\Debug\DCPU floppy editor.exe
+C:\Users\Kelmoir\Documents\Visual Studio 2008\Projects\DCPU floppy editor\DCPU floppy editor\obj\Debug\DCPU floppy editor.pdb
