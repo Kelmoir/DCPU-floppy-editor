@@ -13,15 +13,11 @@ namespace DCPU_floppy_editor
 		internal uint CreateDateTime;
 		internal uint AccessDateTime;
 		internal uint ModifyDateTime;
-		internal uint Size;
-		internal ushort FirstSector;
 		//one ushort reserved, according to spec
 		internal ushort Reserved;
-		internal ushort ResidentSector;
-		internal ushort PositionInSector;
 
 		#region Constructor
-		internal cDirectoryEntry(string NewName, string NewExtention, uint NewSize, ushort NewFirstSector, cFileFlags NewFlags, ushort NewResidentSector)
+		internal cDirectoryEntry(string NewName, string NewExtention, cFileFlags NewFlags)
 		{
 			cDcpuTime Timer = new cDcpuTime();
 			//the name/extention strings can be too long - cut them silently, if neccessary or expant them, we want 8 characters long names
@@ -40,11 +36,7 @@ namespace DCPU_floppy_editor
 			CreateDateTime = Timer.ConvertToDcpuTime(DateTime.Now);
 			AccessDateTime = Timer.ConvertToDcpuTime(DateTime.Now);
 			ModifyDateTime = Timer.ConvertToDcpuTime(DateTime.Now);
-			Size = NewSize;
-			FirstSector = NewFirstSector;
 			Reserved = 0;											//handling the data, so we hopefully just need to adapt later...
-			ResidentSector = NewResidentSector;
-			PositionInSector = 0;
 		}
 		#endregion
 
@@ -52,8 +44,10 @@ namespace DCPU_floppy_editor
 		/// <summary>
 		/// returns the binary data according to the FAT spec
 		/// </summary>
+        /// <param name="FirstSector">The first physical sector of the Stuff the entry is pointing to</param>
+        /// <param name="Size">The fresh calculated size of the Physical representation</param>
 		/// <returns>16 ushourts of DTE</returns>
-		internal ushort[] GetDirectoryBinData()
+		internal ushort[] GetDirectoryBinData(ushort FirstSector, uint Size)
 		{
 			ushort[] Result = new ushort[16];
 			ushort[] Temp;
@@ -80,14 +74,14 @@ namespace DCPU_floppy_editor
 			return Result;
 		}
 		#endregion
+
 		internal cDirectoryEntry Clone()
 		{
-			cDirectoryEntry Clone = new cDirectoryEntry(Name, Extention, Size, FirstSector, Flags, ResidentSector);
+			cDirectoryEntry Clone = new cDirectoryEntry(Name, Extention, Flags);
 			Clone.CreateDateTime = this.CreateDateTime;
 			Clone.AccessDateTime = this.AccessDateTime;
 			Clone.ModifyDateTime = this.ModifyDateTime;
 			Clone.Reserved = this.Reserved;
-			Clone.PositionInSector = this.PositionInSector;
 			return Clone;
 		}
 

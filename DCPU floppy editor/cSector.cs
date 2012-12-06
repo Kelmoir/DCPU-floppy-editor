@@ -12,14 +12,12 @@ namespace DCPU_floppy_editor
     internal class cSector
     {
         internal ushort[] Memory;
-		internal List<cDirectoryEntry> DirectoryEntrys;
 		internal SectorMode Mode;
 
         internal cSector()
         {
             Memory = new ushort[512];
 			Mode = SectorMode.Empty;
-			DirectoryEntrys = new List<cDirectoryEntry>();
         }
         internal cSector Clone()
         {
@@ -28,10 +26,6 @@ namespace DCPU_floppy_editor
             {
                 Clone.Memory[i] = this.Memory[i];
             }
-			foreach (cDirectoryEntry Element in this.DirectoryEntrys)
-			{
-				Clone.DirectoryEntrys.Add(Element.Clone());
-			}
 			Clone.Mode = this.Mode;
             return Clone;
         }
@@ -40,25 +34,6 @@ namespace DCPU_floppy_editor
 			for (int i = 0; i < this.Memory.Length; i++)
 				this.Memory[i] = 0;
 			this.Mode = SectorMode.Empty;
-			this.DirectoryEntrys.Clear();
-		}
-		internal void UpdateDirectoryEntrysToBinary()
-		{
-			if (this.Mode == SectorMode.Directory)
-			{
-				int i;
-				ushort[] Buffer;
-				for (i = 0; i < this.Memory.Length; i++)
-					this.Memory[i] = 0;
-				i = 0;
-				foreach (cDirectoryEntry Element in this.DirectoryEntrys)
-				{
-					Buffer = Element.GetDirectoryBinData();
-					for (int j = 0; j < 16; j++)
-						this.Memory[i+j] = Buffer[j];
-					i += 16;
-				}
-			}
 		}
 
 		internal void WriteToFile(System.IO.Stream Savestream, int Endian)

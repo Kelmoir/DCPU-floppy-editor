@@ -50,10 +50,13 @@
   <ItemGroup>
     <Compile Include="cBinLoader.cs" />
     <Compile Include="cDcpuTime.cs" />
+    <Compile Include="cFile.cs" />
+    <Compile Include="cFileSystemItem.cs" />
     <Compile Include="cDirectoryEntry.cs" />
     <Compile Include="cFAT.cs" />
     <Compile Include="cFileFlags.cs" />
     <Compile Include="cFileSigConverter.cs" />
+    <Compile Include="cFileSystem.cs" />
     <Compile Include="cFloppy.cs" />
     <Compile Include="cSector.cs" />
     <Compile Include="mainForm.cs">

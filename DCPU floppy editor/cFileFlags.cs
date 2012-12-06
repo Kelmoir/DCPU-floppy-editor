@@ -56,5 +56,30 @@ namespace DCPU_floppy_editor
 			Clone.SystemFile = this.SystemFile;
 			return Clone;
 		}
+        public override string ToString()
+        {
+            string Result = "";
+            if (Archive)
+                Result += "A";
+            else
+                Result += " ";
+            if (Directory)
+                Result += "D";
+            else
+                Result += " ";
+            if (Executable)
+                Result += "X";
+            else
+                Result += " ";
+            if (Hidden)
+                Result += "h";
+            else
+                Result += " ";
+            if (ReadOnly)
+                Result += "R";
+            else
+                Result += " ";
+            return Result;
+        }
 	}
 }
