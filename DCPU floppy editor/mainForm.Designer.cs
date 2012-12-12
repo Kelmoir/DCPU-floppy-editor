@@ -127,6 +127,7 @@
             this.btAddFile.TabIndex = 4;
             this.btAddFile.Text = "Add file to floppy";
             this.btAddFile.UseVisualStyleBackColor = true;
+            this.btAddFile.Click += new System.EventHandler(this.btAddFile_Click);
             // 
             // button1
             // 
@@ -241,10 +242,12 @@
             // 
             // lbItemsInWorkingDir
             // 
+            this.lbItemsInWorkingDir.Font = new System.Drawing.Font("Courier New", 8.25F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
             this.lbItemsInWorkingDir.FormattingEnabled = true;
+            this.lbItemsInWorkingDir.ItemHeight = 14;
             this.lbItemsInWorkingDir.Location = new System.Drawing.Point(6, 43);
             this.lbItemsInWorkingDir.Name = "lbItemsInWorkingDir";
-            this.lbItemsInWorkingDir.Size = new System.Drawing.Size(345, 485);
+            this.lbItemsInWorkingDir.Size = new System.Drawing.Size(345, 480);
             this.lbItemsInWorkingDir.TabIndex = 8;
             // 
             // groupBox3

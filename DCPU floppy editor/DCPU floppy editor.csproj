@@ -58,6 +58,7 @@
     <Compile Include="cFileSigConverter.cs" />
     <Compile Include="cFileSystem.cs" />
     <Compile Include="cFloppy.cs" />
+    <Compile Include="cHexInterface.cs" />
     <Compile Include="cSector.cs" />
     <Compile Include="mainForm.cs">
       <SubType>Form</SubType>
@@ -71,6 +72,12 @@
     <Compile Include="NewFloppyWizard.Designer.cs">
       <DependentUpon>NewFloppyWizard.cs</DependentUpon>
     </Compile>
+    <Compile Include="NewItemWizard.cs">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="NewItemWizard.Designer.cs">
+      <DependentUpon>NewItemWizard.cs</DependentUpon>
+    </Compile>
     <Compile Include="Program.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
     <EmbeddedResource Include="mainForm.resx">
@@ -78,6 +85,10 @@
     </EmbeddedResource>
     <EmbeddedResource Include="NewFloppyWizard.resx">
       <DependentUpon>NewFloppyWizard.cs</DependentUpon>
+      <SubType>Designer</SubType>
+    </EmbeddedResource>
+    <EmbeddedResource Include="NewItemWizard.resx">
+      <DependentUpon>NewItemWizard.cs</DependentUpon>
       <SubType>Designer</SubType>
     </EmbeddedResource>
     <EmbeddedResource Include="Properties\Resources.resx">

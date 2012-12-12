@@ -54,6 +54,11 @@ namespace DCPU_floppy_editor
                 return false;
             }
         }
+        internal List<ushort> GetReadOut()
+        {
+            return Readout;
+        }
+
         internal List<cSector> GetFile(FileType Type)
         {
             List<cSector> Result = new List<cSector>();

@@ -23,11 +23,11 @@ namespace DCPU_floppy_editor
             PathToWorkingDirectory.Add(RootDirectory);
         }
 
-        internal void CreateNewDirectory(string Name)
+        internal void CreateNewDirectory(cFileSystemItem Item)
         {
             cFileFlags Flags = new cFileFlags();
             Flags.Directory = true;
-            WorkingDirectory.AddItem(new cFileSystemItem(Name, "", Flags, false));
+            WorkingDirectory.AddItem(Item);
         }
 
         internal cFileSystemItem GetWorkingDirektory()
@@ -46,7 +46,7 @@ namespace DCPU_floppy_editor
 
         internal List<string> GetListOfEntrysInWorkingDirectory()
         {
-            return WorkingDirectory.GetCopyOfItemList();
+            return WorkingDirectory.GetItemList();
         }
         internal bool RemoveDirTableEntry(cFileSystemItem ItemToRemove)
         {

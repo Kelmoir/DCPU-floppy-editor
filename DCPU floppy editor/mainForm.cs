@@ -56,11 +56,29 @@ namespace DCPU_floppy_editor
             tbWorkDir.Text = FileSystem.GetPathToWorkingDirectoryString();
             lbItemsInWorkingDir.Items.Clear();
             List<string> ListOfItems = FileSystem.GetListOfEntrysInWorkingDirectory();
+            foreach (string Item in ListOfItems)
+                lbItemsInWorkingDir.Items.Add(Item);
         }
 
         private void btAddDirectory_Click(object sender, EventArgs e)
         {
+            NewItemWizard Wiz = new NewItemWizard(true, cbEndian.SelectedIndex);
+            if (Wiz.ShowDialog() == DialogResult.OK)
+            {
+                FileSystem.CreateNewDirectory(Wiz.NewItem);
+                UpdateDirectoryView();
+            }
 
+        }
+
+        private void btAddFile_Click(object sender, EventArgs e)
+        {
+            NewItemWizard Wiz = new NewItemWizard(false, cbEndian.SelectedIndex);
+            if (Wiz.ShowDialog() == DialogResult.OK)
+            {
+                FileSystem.CreateNewDirectory(Wiz.NewItem);
+                UpdateDirectoryView();
+            }
         }
 
     }

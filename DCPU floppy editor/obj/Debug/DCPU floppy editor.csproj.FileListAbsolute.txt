@@ -7,3 +7,4 @@ C:\Users\Kelmoir\Documents\Visual Studio 2008\Projects\DCPU floppy editor\DCPU f
 C:\Users\Kelmoir\Documents\Visual Studio 2008\Projects\DCPU floppy editor\DCPU floppy editor\bin\Debug\DCPU floppy editor.pdb
 C:\Users\Kelmoir\Documents\Visual Studio 2008\Projects\DCPU floppy editor\DCPU floppy editor\obj\Debug\DCPU floppy editor.exe
 C:\Users\Kelmoir\Documents\Visual Studio 2008\Projects\DCPU floppy editor\DCPU floppy editor\obj\Debug\DCPU floppy editor.pdb
+C:\Users\Kelmoir\Documents\Visual Studio 2008\Projects\DCPU Floppy Editor\DCPU floppy editor\obj\Debug\DCPU_floppy_editor.NewItemWizard.resources

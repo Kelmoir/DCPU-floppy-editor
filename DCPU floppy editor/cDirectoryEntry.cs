@@ -21,17 +21,9 @@ namespace DCPU_floppy_editor
 		{
 			cDcpuTime Timer = new cDcpuTime();
 			//the name/extention strings can be too long - cut them silently, if neccessary or expant them, we want 8 characters long names
-			if (NewName.Length > 8)
-				NewName = NewName.Substring(0, 8);
-			while (NewName.Length < 8)
-				NewName += " ";
-			Name = NewName;
+            SetName(NewName);
 			//and 3 characters long Extensions
-			if (NewExtention.Length > 3)
-				NewExtention = NewExtention.Substring(0, 3);
-			while (NewExtention.Length < 3)
-				NewExtention += " ";
-			Extention = NewExtention;
+            SetExtension(NewExtention);
 			this.Flags = NewFlags;
 			CreateDateTime = Timer.ConvertToDcpuTime(DateTime.Now);
 			AccessDateTime = Timer.ConvertToDcpuTime(DateTime.Now);
@@ -74,6 +66,29 @@ namespace DCPU_floppy_editor
 			return Result;
 		}
 		#endregion
+
+        internal void SetNameFromManIdAndDevId(uint ManID, uint DevID)
+        {
+            cFileSigConverter Converter = new cFileSigConverter();
+            Name = Converter.ConvertToFileNameFromManIdDevId(ManID, DevID);
+        }
+
+        internal void SetName(string NewName)
+        {
+            if (NewName.Length > 8)
+                NewName = NewName.Substring(0, 8);
+            while (NewName.Length < 8)
+                NewName += " ";
+            Name = NewName;
+        }
+        internal void SetExtension(string NewExtention)
+        {
+            if (NewExtention.Length > 3)
+                NewExtention = NewExtention.Substring(0, 3);
+            while (NewExtention.Length < 3)
+                NewExtention += " ";
+            Extention = NewExtention;
+        }
 
 		internal cDirectoryEntry Clone()
 		{

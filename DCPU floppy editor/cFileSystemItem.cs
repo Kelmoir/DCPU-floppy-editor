@@ -70,21 +70,18 @@ namespace DCPU_floppy_editor
                 return false;
             }
         }
-        internal List<string> GetCopyOfItemList()
+        internal List<string> GetItemList()
         {
             if (Metadata.Flags.Directory)
             {
                 List<string> ResultList = new List<string>();
-                if (!IsRoot)
-                {
-                    cFileFlags Flags = new cFileFlags();
-                    Flags.ReadOnly = true;
-                    Flags.Directory = true;
-                    cFileSystemItem Temp = new cFileSystemItem("..", "", Flags, false);
-                    ResultList.Add(Temp.ToString());
-                }
+                cFileFlags Flags = new cFileFlags();
+                Flags.ReadOnly = true;
+                Flags.Directory = true;
+                cFileSystemItem Temp = new cFileSystemItem("..", "", Flags, false);
+                ResultList.Add(Temp.ToString());
                 foreach (cFileSystemItem Item in Items)
-                    ResultList.Add(this.ToString());
+                    ResultList.Add(Item.ToString());
                 return ResultList;
             }
             else
@@ -124,6 +121,26 @@ namespace DCPU_floppy_editor
         internal string GetName()
         {
             return Metadata.Name;
+        }
+
+        internal bool IsFileEmpty()
+        {
+            if (!IsDirectory())
+            {
+                return File.IsEmpty();
+            }
+            else
+                return true;
+        }
+        internal bool IsValid()
+        {
+            if (!IsDirectory() && IsFileEmpty())
+            {
+                return false;
+            }
+            //other validation questions...
+
+            return true;
         }
 
         #endregion
