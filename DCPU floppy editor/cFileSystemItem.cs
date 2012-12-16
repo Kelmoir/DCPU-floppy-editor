@@ -5,6 +5,13 @@ using System.Text;
 
 namespace DCPU_floppy_editor
 {
+    public class SupDirectorySelected : Exception
+    {
+    }
+    public class NotADirectory : Exception
+    {
+    }
+
     internal class cFileSystemItem
     {
         private List<cFileSystemItem> Items;
@@ -117,12 +124,6 @@ namespace DCPU_floppy_editor
         {
             return Metadata.Flags.Directory;
         }
-
-        internal string GetName()
-        {
-            return Metadata.Name;
-        }
-
         internal bool IsFileEmpty()
         {
             if (!IsDirectory())
@@ -143,6 +144,29 @@ namespace DCPU_floppy_editor
             return true;
         }
 
+        #region Get Item From Index
+        internal cFileSystemItem GetItemFromIndex(int Index)
+        {
+            if (IsDirectory() && (Index - 1 < this.Items.Count))
+            {
+                if (Index == 0)
+                {
+                    cFileFlags Flags = new cFileFlags();
+                    Flags.ReadOnly = true;
+                    Flags.Directory = true;
+                    return new cFileSystemItem("..", "", Flags, false);
+                }
+                else
+                {
+                    return Items[Index - 1];
+                }
+            }
+            else
+            {
+                return new cFileSystemItem("", "", new cFileFlags(), false);
+            }
+        }
+        #endregion
         #endregion
 
         #region Clone
@@ -157,17 +181,28 @@ namespace DCPU_floppy_editor
         }
         #endregion
 
+        #region ToString
         public override string ToString()
         {
-            string Result = Metadata.Name;
-            if (!Metadata.Flags.Directory)
+            return Metadata.ToString();
+        }
+        #endregion
+
+
+        internal cFileSystemItem ChangeDirectory(int Index)
+        {
+            if (Index == 0)
             {
-                Result += "." + Metadata.Extention;
+                throw new SupDirectorySelected();
             }
-            while (Result.Length < 15)
-                Result += " ";
-            Result += Metadata.Flags.ToString();
-            return Result;
+            else if (!Items[Index - 1].IsDirectory() || (Index-1 >= Items.Count))
+            {
+                throw new NotADirectory();
+            }
+            else
+            {
+                return Items[Index - 1];
+            }
         }
     }
 }

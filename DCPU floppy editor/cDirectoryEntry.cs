@@ -16,6 +16,10 @@ namespace DCPU_floppy_editor
 		//one ushort reserved, according to spec
 		internal ushort Reserved;
 
+        private bool Driver;
+        internal uint ManID;
+        internal uint DevID;
+
 		#region Constructor
 		internal cDirectoryEntry(string NewName, string NewExtention, cFileFlags NewFlags)
 		{
@@ -67,19 +71,25 @@ namespace DCPU_floppy_editor
 		}
 		#endregion
 
-        internal void SetNameFromManIdAndDevId(uint ManID, uint DevID)
+        internal void SetManIdAndDevId(uint ManID, uint DevID)
         {
-            cFileSigConverter Converter = new cFileSigConverter();
-            Name = Converter.ConvertToFileNameFromManIdDevId(ManID, DevID);
+            if (Driver)
+            {
+                this.ManID = ManID;
+                this.DevID = DevID;
+            }
         }
 
         internal void SetName(string NewName)
         {
-            if (NewName.Length > 8)
-                NewName = NewName.Substring(0, 8);
-            while (NewName.Length < 8)
-                NewName += " ";
-            Name = NewName;
+            if (!Driver)
+            {
+                if (NewName.Length > 8)
+                    NewName = NewName.Substring(0, 8);
+                while (NewName.Length < 8)
+                    NewName += " ";
+                Name = NewName;
+            }
         }
         internal void SetExtension(string NewExtention)
         {
@@ -100,5 +110,67 @@ namespace DCPU_floppy_editor
 			return Clone;
 		}
 
+        public override string ToString()
+        {
+            string Result;
+            if (!Driver)
+            {
+                Result = Name;
+                if (!Flags.Directory)
+                {
+                    Result += "." + Extention;
+                }
+            }
+            else
+            {
+                Result = cHexInterface.ConvertToString(ManID);
+                Result += "." + Extention;
+            }
+            while (Result.Length < 15)
+                Result += " ";
+            Result += Flags.ToString();
+            return Result;
+        }
+        internal string GetName()
+        {
+            if (Driver)
+            {
+                return "";
+            }
+            else
+            {
+                return Name;
+            }
+        }
+        internal string GetExtention()
+        {
+            return Extention;
+        }
+        internal string GetManIDstring()
+        {
+            if (Driver)
+            {
+                return cHexInterface.ConvertToString(ManID);
+            }
+            else
+            {
+                return "";
+            }
+        }
+        internal string GetDevIDstring()
+        {
+            if (Driver)
+            {
+                return cHexInterface.ConvertToString(DevID);
+            }
+            else
+            {
+                return "";
+            }
+        }
+        internal void MakeDriver()
+        {
+            Driver = true;
+        }
 	}
 }

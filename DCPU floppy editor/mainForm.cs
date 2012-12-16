@@ -81,5 +81,33 @@ namespace DCPU_floppy_editor
             }
         }
 
+        private void lbItemsInWorkingDir_SelectedIndexChanged(object sender, EventArgs e)
+        {
+            if (lbItemsInWorkingDir.SelectedIndex > -1)
+            {
+                cFileSystemItem Temp = FileSystem.GetItemByIndex(lbItemsInWorkingDir.SelectedIndex);
+                tbDeviceID.Text = Temp.Metadata.GetDevIDstring();
+                tbExtention.Text = Temp.Metadata.GetExtention();
+                tbFileName.Text = Temp.Metadata.GetName();
+                tbManufacturerID.Text = Temp.Metadata.GetManIDstring();
+            }
+            else
+            {
+                tbDeviceID.Text = "";
+                tbExtention.Text = "";
+                tbFileName.Text = "";
+                tbManufacturerID.Text = "";
+            }
+        }
+
+        private void lbItemsInWorkingDir_DoubleClick(object sender, EventArgs e)
+        {
+            if (lbItemsInWorkingDir.SelectedIndex > -1)
+            {
+                FileSystem.ChangeDirectory(lbItemsInWorkingDir.SelectedIndex);
+                UpdateDirectoryView();
+            }
+        }
+
     }
 }

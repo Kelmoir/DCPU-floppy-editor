@@ -16,10 +16,10 @@ namespace DCPU_floppy_editor
             }
             if (Source.Substring(0, 2) != "0x")
             {
-                throw new Exception ("Please stick to the hex numerator");
+                throw new Exception ("Please stick to the hex numerator (0x)");
             }
             Source = Source.Substring(2, Source.Length - 2);
-            for (int Index = 0; Index < Source.Length - 1; Index++)
+            for (int Index = 0; Index < Source.Length; Index++)
             {
                 Number = Number << 4;
                 switch (Source.Substring(Index, 1))

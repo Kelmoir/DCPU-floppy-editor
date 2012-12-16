@@ -249,6 +249,8 @@
             this.lbItemsInWorkingDir.Name = "lbItemsInWorkingDir";
             this.lbItemsInWorkingDir.Size = new System.Drawing.Size(345, 480);
             this.lbItemsInWorkingDir.TabIndex = 8;
+            this.lbItemsInWorkingDir.SelectedIndexChanged += new System.EventHandler(this.lbItemsInWorkingDir_SelectedIndexChanged);
+            this.lbItemsInWorkingDir.DoubleClick += new System.EventHandler(this.lbItemsInWorkingDir_DoubleClick);
             // 
             // groupBox3
             // 
@@ -283,7 +285,7 @@
             this.Controls.Add(this.menuStrip1);
             this.MainMenuStrip = this.menuStrip1;
             this.Name = "mainForm";
-            this.Text = "Form1";
+            this.Text = "DCPU floppy editor";
             this.menuStrip1.ResumeLayout(false);
             this.menuStrip1.PerformLayout();
             this.Endianess.ResumeLayout(false);

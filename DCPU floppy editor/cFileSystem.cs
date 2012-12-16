@@ -39,7 +39,7 @@ namespace DCPU_floppy_editor
             string Result = "";
             foreach (cFileSystemItem Element in PathToWorkingDirectory)
             {
-                Result += Element.GetName().Trim() + "\\";
+                Result += Element.Metadata.GetName().Trim() + "\\";
             }
             return Result;
         }
@@ -53,7 +53,32 @@ namespace DCPU_floppy_editor
             return WorkingDirectory.DeleteItem(ItemToRemove);
         }
 
+        internal cFileSystemItem GetItemByIndex(int Index)
+        {
+            return this.WorkingDirectory.GetItemFromIndex(Index);
+        }
 
 
+
+        internal void ChangeDirectory(int Index)
+        {
+            try
+            {
+                cFileSystemItem NewDir = WorkingDirectory.ChangeDirectory(Index);
+                PathToWorkingDirectory.Add(NewDir);
+                WorkingDirectory = NewDir;
+            }
+            catch (SupDirectorySelected ex)
+            {
+                if (PathToWorkingDirectory.Count > 1)
+                {
+                    WorkingDirectory = PathToWorkingDirectory[PathToWorkingDirectory.Count -2];
+                    PathToWorkingDirectory.RemoveAt(PathToWorkingDirectory.Count-1);
+                }
+            }
+            catch (NotADirectory na)
+            {
+            }
+        }
     }
 }

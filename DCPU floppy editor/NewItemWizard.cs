@@ -92,7 +92,8 @@ namespace DCPU_floppy_editor
             {
                 try
                 {
-                    NewItem.Metadata.SetNameFromManIdAndDevId(cHexInterface.ConvertToUint(tbNewName.Text), cHexInterface.ConvertToUint(tbNewExtension.Text));
+                    NewItem.Metadata.MakeDriver();
+                    NewItem.Metadata.SetManIdAndDevId(cHexInterface.ConvertToUint(tbNewName.Text), cHexInterface.ConvertToUint(tbNewExtension.Text));
                 }
                 catch (Exception ex)
                 {
