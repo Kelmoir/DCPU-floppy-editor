@@ -84,5 +84,10 @@ namespace DCPU_floppy_editor
                 return false;
             }
         }
+
+        internal int GetSizeInSectors(int SectorSize)
+        {
+            return RootDirectory.GetSizeInSectors(SectorSize) + FAT.GetNumHeaderSectors();
+        }
     }
 }

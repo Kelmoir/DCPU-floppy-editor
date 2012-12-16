@@ -51,12 +51,16 @@
             this.groupBox3 = new System.Windows.Forms.GroupBox();
             this.tbWorkDir = new System.Windows.Forms.TextBox();
             this.dgItemsInWorkingDir = new System.Windows.Forms.DataGridView();
+            this.groupBox4 = new System.Windows.Forms.GroupBox();
+            this.pbMemoryUsage = new System.Windows.Forms.ProgressBar();
+            this.lbSectorsUsed = new System.Windows.Forms.Label();
             this.menuStrip1.SuspendLayout();
             this.Endianess.SuspendLayout();
             this.groupBox1.SuspendLayout();
             this.groupBox2.SuspendLayout();
             this.groupBox3.SuspendLayout();
             ((System.ComponentModel.ISupportInitialize)(this.dgItemsInWorkingDir)).BeginInit();
+            this.groupBox4.SuspendLayout();
             this.SuspendLayout();
             // 
             // menuStrip1
@@ -82,20 +86,20 @@
             // NewFloppyToolStripMenuItem
             // 
             this.NewFloppyToolStripMenuItem.Name = "NewFloppyToolStripMenuItem";
-            this.NewFloppyToolStripMenuItem.Size = new System.Drawing.Size(142, 22);
+            this.NewFloppyToolStripMenuItem.Size = new System.Drawing.Size(152, 22);
             this.NewFloppyToolStripMenuItem.Text = " New Floppy";
             this.NewFloppyToolStripMenuItem.Click += new System.EventHandler(this.NewFloppyToolStripMenuItem_Click);
             // 
             // openFloppyToolStripMenuItem
             // 
             this.openFloppyToolStripMenuItem.Name = "openFloppyToolStripMenuItem";
-            this.openFloppyToolStripMenuItem.Size = new System.Drawing.Size(142, 22);
+            this.openFloppyToolStripMenuItem.Size = new System.Drawing.Size(152, 22);
             this.openFloppyToolStripMenuItem.Text = "Open Floppy";
             // 
             // saveFloppyToolStripMenuItem
             // 
             this.saveFloppyToolStripMenuItem.Name = "saveFloppyToolStripMenuItem";
-            this.saveFloppyToolStripMenuItem.Size = new System.Drawing.Size(142, 22);
+            this.saveFloppyToolStripMenuItem.Size = new System.Drawing.Size(152, 22);
             this.saveFloppyToolStripMenuItem.Text = "Save Floppy";
             this.saveFloppyToolStripMenuItem.Click += new System.EventHandler(this.saveFloppyToolStripMenuItem_Click);
             // 
@@ -142,6 +146,7 @@
             // 
             // groupBox1
             // 
+            this.groupBox1.Controls.Add(this.groupBox4);
             this.groupBox1.Controls.Add(this.groupBox2);
             this.groupBox1.Location = new System.Drawing.Point(12, 130);
             this.groupBox1.Name = "groupBox1";
@@ -282,6 +287,33 @@
             this.dgItemsInWorkingDir.MouseDoubleClick += new System.Windows.Forms.MouseEventHandler(this.dgItemsInWorkingDir_MouseDoubleClick);
             this.dgItemsInWorkingDir.SelectionChanged += new System.EventHandler(this.dgItemsInWorkingDir_SelectionChanged);
             // 
+            // groupBox4
+            // 
+            this.groupBox4.Controls.Add(this.lbSectorsUsed);
+            this.groupBox4.Controls.Add(this.pbMemoryUsage);
+            this.groupBox4.Location = new System.Drawing.Point(6, 129);
+            this.groupBox4.Name = "groupBox4";
+            this.groupBox4.Size = new System.Drawing.Size(200, 62);
+            this.groupBox4.TabIndex = 1;
+            this.groupBox4.TabStop = false;
+            this.groupBox4.Text = "Memory usage";
+            // 
+            // pbMemoryUsage
+            // 
+            this.pbMemoryUsage.Location = new System.Drawing.Point(6, 19);
+            this.pbMemoryUsage.Name = "pbMemoryUsage";
+            this.pbMemoryUsage.Size = new System.Drawing.Size(185, 23);
+            this.pbMemoryUsage.TabIndex = 0;
+            // 
+            // lbSectorsUsed
+            // 
+            this.lbSectorsUsed.AutoSize = true;
+            this.lbSectorsUsed.Location = new System.Drawing.Point(6, 45);
+            this.lbSectorsUsed.Name = "lbSectorsUsed";
+            this.lbSectorsUsed.Size = new System.Drawing.Size(51, 13);
+            this.lbSectorsUsed.TabIndex = 2;
+            this.lbSectorsUsed.Text = "unknown";
+            // 
             // mainForm
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
@@ -306,6 +338,8 @@
             this.groupBox3.ResumeLayout(false);
             this.groupBox3.PerformLayout();
             ((System.ComponentModel.ISupportInitialize)(this.dgItemsInWorkingDir)).EndInit();
+            this.groupBox4.ResumeLayout(false);
+            this.groupBox4.PerformLayout();
             this.ResumeLayout(false);
             this.PerformLayout();
 
@@ -336,6 +370,9 @@
         private System.Windows.Forms.GroupBox groupBox3;
         private System.Windows.Forms.TextBox tbWorkDir;
         private System.Windows.Forms.DataGridView dgItemsInWorkingDir;
+        private System.Windows.Forms.GroupBox groupBox4;
+        private System.Windows.Forms.ProgressBar pbMemoryUsage;
+        private System.Windows.Forms.Label lbSectorsUsed;
     }
 }
 

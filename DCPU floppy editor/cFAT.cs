@@ -84,5 +84,9 @@ namespace DCPU_floppy_editor
 			Index = 0;
 			return true;
 		}
+        internal int GetNumHeaderSectors()
+        {
+            return NumFatSectors + FatIndex + 1;
+        }
     }
 }

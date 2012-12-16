@@ -41,9 +41,13 @@ namespace DCPU_floppy_editor
             int result = 0;
             if (Metadata.Flags.Directory)
             {
-                foreach (cFileSystemItem Element in Items)
-                    result += Element.GetSizeInSectors(SectorSize);
-                result += 0x10;     //the ".." entry
+                result = this.GetNumOfItems() / 20;
+                if (this.GetNumOfItems() % 20 != 0)
+                {
+                    result += 1;
+                }
+                foreach (cFileSystemItem Item in this.Items)
+                    result += Item.GetSizeInSectors(SectorSize);
             }
             else
             {

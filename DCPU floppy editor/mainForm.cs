@@ -48,6 +48,7 @@ namespace DCPU_floppy_editor
 					Floppy = new cFloppy(0);							//make sure, nothing happens
 					FileSystem = new cFileSystem(DiskType.NonBootable, Floppy);
 				}
+                UpdateDiskUsage();
 			}
         }
 
@@ -92,8 +93,23 @@ namespace DCPU_floppy_editor
                 FileSystem.CreateNewDirectory(Wiz.NewItem);
                 UpdateDirectoryView();
                 FloppyChanged = true;
+                UpdateDiskUsage();
             }
 
+        }
+
+        private void UpdateDiskUsage()
+        {
+            try
+            {
+                int UsedSectors = FileSystem.GetSizeInSectors(Floppy.Sectors[0].Memory.Length);
+                lbSectorsUsed.Text = UsedSectors.ToString() + "/" + Floppy.Sectors.Length + " sectors used";
+                pbMemoryUsage.Value = UsedSectors * 100 / Floppy.Sectors.Length;
+            }
+            catch
+            {
+                pbMemoryUsage.Value = 0;
+            }
         }
 
         private void btAddFile_Click(object sender, EventArgs e)
@@ -104,6 +120,7 @@ namespace DCPU_floppy_editor
                 FileSystem.CreateNewDirectory(Wiz.NewItem);
                 UpdateDirectoryView();
                 FloppyChanged = true;
+                UpdateDiskUsage();
             }
         }
 
@@ -114,6 +131,7 @@ namespace DCPU_floppy_editor
                 FileSystem.RemoveDirTableEntry((int)dgItemsInWorkingDir.Rows[dgItemsInWorkingDir.SelectedRows[0].Index].Cells["Index"].Value);
                 UpdateDirectoryView();
                 FloppyChanged = true;
+                UpdateDiskUsage();
             }
         }
 
