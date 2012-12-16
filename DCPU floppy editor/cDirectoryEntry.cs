@@ -146,6 +146,10 @@ namespace DCPU_floppy_editor
         {
             return Extention;
         }
+        internal string GetFlagsString()
+        {
+            return Flags.ToString();
+        }
         internal string GetManIDstring()
         {
             if (Driver)

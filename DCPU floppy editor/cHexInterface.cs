@@ -80,7 +80,7 @@ namespace DCPU_floppy_editor
                         break;
                     default:
                         throw new Exception("invalid hex number");
-                        break;
+                        //break;
 
                 }
             }

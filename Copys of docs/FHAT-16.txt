@@ -1,0 +1,92 @@
+Filesystem
+	The file system is a set of properties that is exemplified by the disk it is used on.
+
+Summary:
+	This Filesystem ressembles an common FAT16 Interpretation for the DCPU-16.
+	It will contain the Bootsector,reserved sectors, the FAT sector, and the usuable sectors themselves.
+	All executable files have a header with a relocation table and some other words. This header is located at the end of the file.
+
+Disk layout:
+	Sector              Purpose
+	1                    Bootsector
+	2..n+1               Reserved sectors (n in on Offset 0x8 in the Bootsector)
+	n+2..n+2+fat_size-1  FAT sectors (m is offset 0x9 in the boot sector). 
+                             The Number of sectors required to have an entry for each sector defines the FAT size
+	n+2+fat_size         Root directory starting sector 
+	... to ent of Floppy Usable secors
+
+Boot sector layout:
+	Offset    Size    Purpose
+	0x00        1     Boot flag, {add PC, 15} if bootable; 0x0 if not.
+	0x01        1     Filesystem descriptor
+	0x02        6     Media name
+	0x08        1     Number of reserved sectors
+	0x09        1     Number of FAT tables (usually 1, devices are now required to sopport values other than 1)
+	0x0A        1     Number of words per sector (usually 512)
+	0x0B        1     Number of sectors on disk (usually 1440 for a fdc)
+	0x0C        4     Serial number of media, randomly generated on format
+	0x10      496     Bootloader code
+
+Directory table entry layout:
+	[Size is in words, 1B denotes an extra half word]
+	Offset    Size    Purpose
+	0x0        4      Filename (Array of 8 characters)
+	0x4        1+1B   File extension (high byte of second word) of 3 chars
+	0x5        0+1B   File flags (low byte of word)
+	0x6        2      Create datetime
+	0x8        2      Last access datetime
+	0xA        2      Last modify datetime
+	0xC        2      Size in words
+	0xE        1      First cluster
+	0xF        1      Reserved for future expansion
+
+	Formula for determining Number of entry slots available in every directory follows.
+	X/16 = y
+	Were x is the number of sectors allocated to the directory & y is the number of possible entries (includes directories as well as files)
+
+
+
+Reserved sectors:
+	Contain all the code loaded and executed by the Bootloader
+
+FAT sectors: 
+	The File Allocation Table (FAT) is a list of entries that map to each cluster on the partition. Each entry records one of five things:
+		the cluster number of the next cluster in a chain
+		a special end of clusterchain (EOC) entry that indicates the end of a chain
+		a special entry to mark a bad cluster
+		a special entry to mark a reserved cluster
+		a zero to note that the cluster is unused
+
+FAT entry values:
+	Value		Meaning
+	0x0000          Free sector.
+	0x0001-0xFFEF   Used sector, points to next sector.
+	0xFFF0-0xFFFC   Reserved for future expansion, DNU.
+	0xFFFD          Reserved sector.
+	0xFFFE          Bad sector.
+	0xFFFF          Used sector, Last sector in chain.
+
+Root directory sector: 
+	Contains root directory entries for the root directory.Entries w/ the Volume Label flag, subdirectory ".." pointing to root, should have a size of 0. 
+
+Usable sectors: 
+	The usable sectors can being filled with data for files and folders.
+
+Flags for directorys and Files (offset 5, lo-Byte):
+Bit   
+Bit 0: read-only
+Bit 1: hidden
+Bit 2: system file
+Bit 3: reserved
+Bit 4: directory
+Bit 5: archive
+Bit 6: executable
+Bit 7: reserved
+
+
+Layout File with relocation Table Version 0:
+	Word            Contents
+	-n-2..-3        Relocation table with n entries
+	-2            	Preferred stack size
+	-1            	Header version: 0x0000
+	last            Header size in words

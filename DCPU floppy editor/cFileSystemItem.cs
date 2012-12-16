@@ -66,34 +66,11 @@ namespace DCPU_floppy_editor
                 return false;
             }
         }
-        internal bool DeleteItem(cFileSystemItem ItemToDelete)
+        internal void DeleteItem(int IndexToDelete)
         {
-            if (Metadata.Flags.Directory)
+            if (Metadata.Flags.Directory && IndexToDelete > 0)
             {
-                return Items.Remove(ItemToDelete);
-            }
-            else
-            {
-                return false;
-            }
-        }
-        internal List<string> GetItemList()
-        {
-            if (Metadata.Flags.Directory)
-            {
-                List<string> ResultList = new List<string>();
-                cFileFlags Flags = new cFileFlags();
-                Flags.ReadOnly = true;
-                Flags.Directory = true;
-                cFileSystemItem Temp = new cFileSystemItem("..", "", Flags, false);
-                ResultList.Add(Temp.ToString());
-                foreach (cFileSystemItem Item in Items)
-                    ResultList.Add(Item.ToString());
-                return ResultList;
-            }
-            else
-            {
-                return null;
+                Items.RemoveAt(IndexToDelete-1);
             }
         }
         internal bool SetFile(cFile NewFile)
@@ -202,6 +179,18 @@ namespace DCPU_floppy_editor
             else
             {
                 return Items[Index - 1];
+            }
+        }
+
+        internal int GetNumOfItems()
+        {
+            if (IsDirectory())
+            {
+                return Items.Count + 1;
+            }
+            else
+            {
+                return 0;
             }
         }
     }

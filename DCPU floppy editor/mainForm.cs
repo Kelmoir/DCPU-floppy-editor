@@ -15,6 +15,8 @@ namespace DCPU_floppy_editor
         internal cFloppy Floppy;
         bool FloppyChanged = false;
         cFileSystem FileSystem;
+        DataTable ItemsInWorkingDirectory;
+        int LastSelectedIndex;
 
 
         public mainForm()
@@ -23,6 +25,9 @@ namespace DCPU_floppy_editor
             cbEndian.SelectedIndex = 1;         //Organic outputs big Endian
 			Floppy = new cFloppy(0);
 			FileSystem = new cFileSystem(DiskType.NonBootable, Floppy);
+            ItemsInWorkingDirectory = new DataTable();
+            dgItemsInWorkingDir.DataSource = ItemsInWorkingDirectory;
+            LastSelectedIndex = -1;
         }
 
         private void NewFloppyToolStripMenuItem_Click(object sender, EventArgs e)
@@ -53,11 +58,30 @@ namespace DCPU_floppy_editor
 
         private void UpdateDirectoryView()
         {
+            ClearFileInfos();
             tbWorkDir.Text = FileSystem.GetPathToWorkingDirectoryString();
-            lbItemsInWorkingDir.Items.Clear();
-            List<string> ListOfItems = FileSystem.GetListOfEntrysInWorkingDirectory();
-            foreach (string Item in ListOfItems)
-                lbItemsInWorkingDir.Items.Add(Item);
+            ItemsInWorkingDirectory.Dispose();
+            ItemsInWorkingDirectory = new DataTable();
+            dgItemsInWorkingDir.DataSource = ItemsInWorkingDirectory;
+            ItemsInWorkingDirectory.Columns.Add("Name", typeof(string));
+            dgItemsInWorkingDir.Columns["Name"].Width = 100;
+            ItemsInWorkingDirectory.Columns.Add("Extention", typeof(string));
+            dgItemsInWorkingDir.Columns["Extention"].Width = 55;
+            ItemsInWorkingDirectory.Columns.Add("Flags", typeof(string));
+            dgItemsInWorkingDir.Columns["Flags"].Width = 50;
+            ItemsInWorkingDirectory.Columns.Add("Index", typeof(int));
+            dgItemsInWorkingDir.Columns["Index"].Width = 50;
+            for (int i = 0; i < FileSystem.GetNumItemsInWorkingDirectory(); i++)
+            {
+                DataRow Temp = ItemsInWorkingDirectory.NewRow();
+                cFileSystemItem Item = FileSystem.GetItemByIndex(i);
+                Temp["Name"] = Item.Metadata.GetName();
+                Temp["Extention"] = Item.Metadata.GetExtention();
+                Temp["Flags"] = Item.Metadata.GetFlagsString();
+                Temp["Index"] = i;
+                ItemsInWorkingDirectory.Rows.Add(Temp);
+            }
+
         }
 
         private void btAddDirectory_Click(object sender, EventArgs e)
@@ -67,6 +91,7 @@ namespace DCPU_floppy_editor
             {
                 FileSystem.CreateNewDirectory(Wiz.NewItem);
                 UpdateDirectoryView();
+                FloppyChanged = true;
             }
 
         }
@@ -78,34 +103,57 @@ namespace DCPU_floppy_editor
             {
                 FileSystem.CreateNewDirectory(Wiz.NewItem);
                 UpdateDirectoryView();
+                FloppyChanged = true;
             }
         }
 
-        private void lbItemsInWorkingDir_SelectedIndexChanged(object sender, EventArgs e)
+        private void btRemoveEntry_Click(object sender, EventArgs e)
         {
-            if (lbItemsInWorkingDir.SelectedIndex > -1)
+            if (dgItemsInWorkingDir.SelectedRows[0].Index > -1)
             {
-                cFileSystemItem Temp = FileSystem.GetItemByIndex(lbItemsInWorkingDir.SelectedIndex);
-                tbDeviceID.Text = Temp.Metadata.GetDevIDstring();
-                tbExtention.Text = Temp.Metadata.GetExtention();
-                tbFileName.Text = Temp.Metadata.GetName();
-                tbManufacturerID.Text = Temp.Metadata.GetManIDstring();
-            }
-            else
-            {
-                tbDeviceID.Text = "";
-                tbExtention.Text = "";
-                tbFileName.Text = "";
-                tbManufacturerID.Text = "";
-            }
-        }
-
-        private void lbItemsInWorkingDir_DoubleClick(object sender, EventArgs e)
-        {
-            if (lbItemsInWorkingDir.SelectedIndex > -1)
-            {
-                FileSystem.ChangeDirectory(lbItemsInWorkingDir.SelectedIndex);
+                FileSystem.RemoveDirTableEntry((int)dgItemsInWorkingDir.Rows[dgItemsInWorkingDir.SelectedRows[0].Index].Cells["Index"].Value);
                 UpdateDirectoryView();
+                FloppyChanged = true;
+            }
+        }
+
+        private void dgItemsInWorkingDir_SelectionChanged(object sender, EventArgs e)
+        {
+            if (dgItemsInWorkingDir.SelectedRows.Count > 0)
+            {
+                if (dgItemsInWorkingDir.SelectedRows[0].Index > -1)
+                {
+                    {
+                        cFileSystemItem Temp = FileSystem.GetItemByIndex((int)dgItemsInWorkingDir.Rows[dgItemsInWorkingDir.SelectedRows[0].Index].Cells["Index"].Value);
+                        tbDeviceID.Text = Temp.Metadata.GetDevIDstring();
+                        tbExtention.Text = Temp.Metadata.GetExtention();
+                        tbFileName.Text = Temp.Metadata.GetName();
+                        tbManufacturerID.Text = Temp.Metadata.GetManIDstring();
+                    }
+                }
+                else
+                {
+                    ClearFileInfos();
+                }
+                LastSelectedIndex = dgItemsInWorkingDir.SelectedRows[0].Index;
+            }
+        }
+        private void ClearFileInfos()
+        {
+            tbDeviceID.Text = "";
+            tbExtention.Text = "";
+            tbFileName.Text = "";
+            tbManufacturerID.Text = "";
+        }
+
+        private void dgItemsInWorkingDir_MouseDoubleClick(object sender, MouseEventArgs e)
+        {
+            if (LastSelectedIndex > -1)
+            {
+                if (FileSystem.ChangeDirectory((int)dgItemsInWorkingDir.Rows[dgItemsInWorkingDir.SelectedRows[0].Index].Cells["Index"].Value))
+                {
+                    UpdateDirectoryView();
+                }
             }
         }
 

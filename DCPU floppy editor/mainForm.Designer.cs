@@ -36,7 +36,7 @@
             this.cbEndian = new System.Windows.Forms.ComboBox();
             this.Endianess = new System.Windows.Forms.GroupBox();
             this.btAddFile = new System.Windows.Forms.Button();
-            this.button1 = new System.Windows.Forms.Button();
+            this.btRemoveItem = new System.Windows.Forms.Button();
             this.groupBox1 = new System.Windows.Forms.GroupBox();
             this.groupBox2 = new System.Windows.Forms.GroupBox();
             this.label4 = new System.Windows.Forms.Label();
@@ -48,14 +48,15 @@
             this.tbExtention = new System.Windows.Forms.TextBox();
             this.tbFileName = new System.Windows.Forms.TextBox();
             this.btAddDirectory = new System.Windows.Forms.Button();
-            this.lbItemsInWorkingDir = new System.Windows.Forms.ListBox();
             this.groupBox3 = new System.Windows.Forms.GroupBox();
             this.tbWorkDir = new System.Windows.Forms.TextBox();
+            this.dgItemsInWorkingDir = new System.Windows.Forms.DataGridView();
             this.menuStrip1.SuspendLayout();
             this.Endianess.SuspendLayout();
             this.groupBox1.SuspendLayout();
             this.groupBox2.SuspendLayout();
             this.groupBox3.SuspendLayout();
+            ((System.ComponentModel.ISupportInitialize)(this.dgItemsInWorkingDir)).BeginInit();
             this.SuspendLayout();
             // 
             // menuStrip1
@@ -64,7 +65,7 @@
             this.fileToolStripMenuItem});
             this.menuStrip1.Location = new System.Drawing.Point(0, 0);
             this.menuStrip1.Name = "menuStrip1";
-            this.menuStrip1.Size = new System.Drawing.Size(632, 24);
+            this.menuStrip1.Size = new System.Drawing.Size(628, 24);
             this.menuStrip1.TabIndex = 0;
             this.menuStrip1.Text = "menuStrip1";
             // 
@@ -129,14 +130,15 @@
             this.btAddFile.UseVisualStyleBackColor = true;
             this.btAddFile.Click += new System.EventHandler(this.btAddFile_Click);
             // 
-            // button1
+            // btRemoveItem
             // 
-            this.button1.Location = new System.Drawing.Point(139, 27);
-            this.button1.Name = "button1";
-            this.button1.Size = new System.Drawing.Size(121, 37);
-            this.button1.TabIndex = 5;
-            this.button1.Text = "Remove file from floppy";
-            this.button1.UseVisualStyleBackColor = true;
+            this.btRemoveItem.Location = new System.Drawing.Point(139, 27);
+            this.btRemoveItem.Name = "btRemoveItem";
+            this.btRemoveItem.Size = new System.Drawing.Size(121, 37);
+            this.btRemoveItem.TabIndex = 5;
+            this.btRemoveItem.Text = "Remove selected entry from floppy";
+            this.btRemoveItem.UseVisualStyleBackColor = true;
+            this.btRemoveItem.Click += new System.EventHandler(this.btRemoveEntry_Click);
             // 
             // groupBox1
             // 
@@ -240,22 +242,13 @@
             this.btAddDirectory.UseVisualStyleBackColor = true;
             this.btAddDirectory.Click += new System.EventHandler(this.btAddDirectory_Click);
             // 
-            // lbItemsInWorkingDir
-            // 
-            this.lbItemsInWorkingDir.Font = new System.Drawing.Font("Courier New", 8.25F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            this.lbItemsInWorkingDir.FormattingEnabled = true;
-            this.lbItemsInWorkingDir.ItemHeight = 14;
-            this.lbItemsInWorkingDir.Location = new System.Drawing.Point(6, 43);
-            this.lbItemsInWorkingDir.Name = "lbItemsInWorkingDir";
-            this.lbItemsInWorkingDir.Size = new System.Drawing.Size(345, 480);
-            this.lbItemsInWorkingDir.TabIndex = 8;
-            this.lbItemsInWorkingDir.SelectedIndexChanged += new System.EventHandler(this.lbItemsInWorkingDir_SelectedIndexChanged);
-            this.lbItemsInWorkingDir.DoubleClick += new System.EventHandler(this.lbItemsInWorkingDir_DoubleClick);
-            // 
             // groupBox3
             // 
+            this.groupBox3.Anchor = ((System.Windows.Forms.AnchorStyles)((((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Bottom)
+                        | System.Windows.Forms.AnchorStyles.Left)
+                        | System.Windows.Forms.AnchorStyles.Right)));
+            this.groupBox3.Controls.Add(this.dgItemsInWorkingDir);
             this.groupBox3.Controls.Add(this.tbWorkDir);
-            this.groupBox3.Controls.Add(this.lbItemsInWorkingDir);
             this.groupBox3.Location = new System.Drawing.Point(266, 27);
             this.groupBox3.Name = "groupBox3";
             this.groupBox3.Size = new System.Drawing.Size(357, 543);
@@ -271,15 +264,33 @@
             this.tbWorkDir.Size = new System.Drawing.Size(345, 20);
             this.tbWorkDir.TabIndex = 9;
             // 
+            // dgItemsInWorkingDir
+            // 
+            this.dgItemsInWorkingDir.AllowUserToAddRows = false;
+            this.dgItemsInWorkingDir.AllowUserToDeleteRows = false;
+            this.dgItemsInWorkingDir.Anchor = ((System.Windows.Forms.AnchorStyles)((((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Bottom)
+                        | System.Windows.Forms.AnchorStyles.Left)
+                        | System.Windows.Forms.AnchorStyles.Right)));
+            this.dgItemsInWorkingDir.ColumnHeadersHeightSizeMode = System.Windows.Forms.DataGridViewColumnHeadersHeightSizeMode.AutoSize;
+            this.dgItemsInWorkingDir.Location = new System.Drawing.Point(6, 43);
+            this.dgItemsInWorkingDir.MultiSelect = false;
+            this.dgItemsInWorkingDir.Name = "dgItemsInWorkingDir";
+            this.dgItemsInWorkingDir.ReadOnly = true;
+            this.dgItemsInWorkingDir.SelectionMode = System.Windows.Forms.DataGridViewSelectionMode.FullRowSelect;
+            this.dgItemsInWorkingDir.Size = new System.Drawing.Size(345, 494);
+            this.dgItemsInWorkingDir.TabIndex = 10;
+            this.dgItemsInWorkingDir.MouseDoubleClick += new System.Windows.Forms.MouseEventHandler(this.dgItemsInWorkingDir_MouseDoubleClick);
+            this.dgItemsInWorkingDir.SelectionChanged += new System.EventHandler(this.dgItemsInWorkingDir_SelectionChanged);
+            // 
             // mainForm
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
-            this.ClientSize = new System.Drawing.Size(632, 582);
+            this.ClientSize = new System.Drawing.Size(628, 582);
             this.Controls.Add(this.groupBox3);
             this.Controls.Add(this.btAddDirectory);
             this.Controls.Add(this.groupBox1);
-            this.Controls.Add(this.button1);
+            this.Controls.Add(this.btRemoveItem);
             this.Controls.Add(this.btAddFile);
             this.Controls.Add(this.Endianess);
             this.Controls.Add(this.menuStrip1);
@@ -294,6 +305,7 @@
             this.groupBox2.PerformLayout();
             this.groupBox3.ResumeLayout(false);
             this.groupBox3.PerformLayout();
+            ((System.ComponentModel.ISupportInitialize)(this.dgItemsInWorkingDir)).EndInit();
             this.ResumeLayout(false);
             this.PerformLayout();
 
@@ -308,7 +320,7 @@
         private System.Windows.Forms.ToolStripMenuItem NewFloppyToolStripMenuItem;
         private System.Windows.Forms.GroupBox Endianess;
         private System.Windows.Forms.Button btAddFile;
-        private System.Windows.Forms.Button button1;
+        private System.Windows.Forms.Button btRemoveItem;
         private System.Windows.Forms.GroupBox groupBox1;
         private System.Windows.Forms.GroupBox groupBox2;
         private System.Windows.Forms.TextBox tbFileName;
@@ -321,9 +333,9 @@
         private System.Windows.Forms.Label label2;
         internal System.Windows.Forms.ComboBox cbEndian;
         private System.Windows.Forms.Button btAddDirectory;
-        private System.Windows.Forms.ListBox lbItemsInWorkingDir;
         private System.Windows.Forms.GroupBox groupBox3;
         private System.Windows.Forms.TextBox tbWorkDir;
+        private System.Windows.Forms.DataGridView dgItemsInWorkingDir;
     }
 }
 

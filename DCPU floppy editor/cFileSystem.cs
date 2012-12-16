@@ -9,7 +9,7 @@ namespace DCPU_floppy_editor
     {
         private cFileSystemItem WorkingDirectory;
         private List<cFileSystemItem> PathToWorkingDirectory;
-        internal cFileSystemItem RootDirectory;
+        private cFileSystemItem RootDirectory;
         internal cFAT FAT;
 
         internal cFileSystem(DiskType ModeOfDisk, cFloppy FloppyToUse)
@@ -43,14 +43,13 @@ namespace DCPU_floppy_editor
             }
             return Result;
         }
-
-        internal List<string> GetListOfEntrysInWorkingDirectory()
+        internal void RemoveDirTableEntry(int IndexToRemove)
         {
-            return WorkingDirectory.GetItemList();
+            WorkingDirectory.DeleteItem(IndexToRemove);
         }
-        internal bool RemoveDirTableEntry(cFileSystemItem ItemToRemove)
+        internal int GetNumItemsInWorkingDirectory()
         {
-            return WorkingDirectory.DeleteItem(ItemToRemove);
+            return WorkingDirectory.GetNumOfItems();
         }
 
         internal cFileSystemItem GetItemByIndex(int Index)
@@ -58,26 +57,31 @@ namespace DCPU_floppy_editor
             return this.WorkingDirectory.GetItemFromIndex(Index);
         }
 
-
-
-        internal void ChangeDirectory(int Index)
+        internal bool ChangeDirectory(int Index)
         {
             try
             {
                 cFileSystemItem NewDir = WorkingDirectory.ChangeDirectory(Index);
                 PathToWorkingDirectory.Add(NewDir);
                 WorkingDirectory = NewDir;
+                return true;
             }
-            catch (SupDirectorySelected ex)
+            catch (SupDirectorySelected)
             {
                 if (PathToWorkingDirectory.Count > 1)
                 {
-                    WorkingDirectory = PathToWorkingDirectory[PathToWorkingDirectory.Count -2];
-                    PathToWorkingDirectory.RemoveAt(PathToWorkingDirectory.Count-1);
+                    WorkingDirectory = PathToWorkingDirectory[PathToWorkingDirectory.Count - 2];
+                    PathToWorkingDirectory.RemoveAt(PathToWorkingDirectory.Count - 1);
+                    return true;
+                }
+                else
+                {
+                    return false;
                 }
             }
-            catch (NotADirectory na)
+            catch (NotADirectory)
             {
+                return false;
             }
         }
     }
