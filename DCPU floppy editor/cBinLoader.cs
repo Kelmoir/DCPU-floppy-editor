@@ -18,6 +18,8 @@ namespace DCPU_floppy_editor
             Readout = new List<ushort>();
             OpenFileDialog Dialog = new OpenFileDialog();
             Dialog.Title = "Select the uncompressed bin file to open";
+            Dialog.DefaultExt = "bin";
+            Dialog.Filter = "binary files (*.bin)|*.bin|All files (*.*)|*.*";
             if (Dialog.ShowDialog() == DialogResult.OK)
             {
                 System.IO.Stream Input;

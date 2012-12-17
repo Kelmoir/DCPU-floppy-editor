@@ -51,7 +51,7 @@ namespace DCPU_floppy_editor
             if (Loader.LoadBin(Master.cbEndian.SelectedIndex))
             {
                 Kernel = Loader.GetFile(FileType.Kernel);
-                lbBootloaderStatus.Text = "kernel status: kernel loaded";
+                lbKernelStatus.Text = "kernel status: kernel loaded";
                 KernelAvaiable = true;
                 if (BooloaderAvaiable && KernelAvaiable)
                 {

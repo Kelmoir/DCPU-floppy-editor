@@ -34,6 +34,8 @@ namespace DCPU_floppy_editor
 		{
 			SaveFileDialog Dia = new SaveFileDialog();
 			Dia.Title = "Select a File to save the flopy";
+            Dia.DefaultExt = "dsk";
+            Dia.Filter = "DCPU disk files (*.dsk)|*.dsk|All files (*.*)|*.*";
 			if (Dia.ShowDialog() == DialogResult.OK)
 			{
 				try
