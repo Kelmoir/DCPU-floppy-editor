@@ -47,13 +47,12 @@ namespace DCPU_floppy_editor
 		{
 			ushort[] Result = new ushort[16];
 			ushort[] Temp;
-			cFileSigConverter Converter = new cFileSigConverter();
-			Temp = Converter.ConvertToFileNameSig(Name);
+			Temp = cFileSigConverter.ConvertToFileNameSig(Name);
 			Result[0] = Temp[0];
 			Result[1] = Temp[1];
 			Result[2] = Temp[2];
 			Result[3] = Temp[3];
-			Temp = Converter.ConvertToExtentionSig(Extention);
+            Temp = cFileSigConverter.ConvertToExtentionSig(Extention);
 			Result[4] = Temp[0];
 			Result[5] = Temp[1];
 			Result[5] |= (ushort)Flags.GetFlagByte();
@@ -70,6 +69,11 @@ namespace DCPU_floppy_editor
 			return Result;
 		}
 		#endregion
+
+        internal int GetBinaryEntrySize()
+        {
+            return 16;
+        }
 
         internal void SetManIdAndDevId(uint ManID, uint DevID)
         {
@@ -176,5 +180,5 @@ namespace DCPU_floppy_editor
         {
             Driver = true;
         }
-	}
+    }
 }

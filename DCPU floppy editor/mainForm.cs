@@ -54,7 +54,10 @@ namespace DCPU_floppy_editor
 
 		private void saveFloppyToolStripMenuItem_Click(object sender, EventArgs e)
 		{
-			Floppy.Save(cbEndian.SelectedIndex);
+            if (FileSystem.ConvertToBinary())
+            {
+                Floppy.Save(cbEndian.SelectedIndex);
+            }
 		}
 
         private void UpdateDirectoryView()
@@ -109,6 +112,7 @@ namespace DCPU_floppy_editor
             catch
             {
                 pbMemoryUsage.Value = 0;
+                lbSectorsUsed.Text = "unknown";
             }
         }
 

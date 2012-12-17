@@ -5,9 +5,9 @@ using System.Text;
 
 namespace DCPU_floppy_editor
 {
-	internal class cFileSigConverter
+	static internal class cFileSigConverter
 	{
-		internal ushort[] ConvertToFileNameSig(string Name)
+		static internal ushort[] ConvertToFileNameSig(string Name)
 		{
 			ushort[] Result = new ushort[4];
 			char[] Temp = Name.ToCharArray();
@@ -18,7 +18,7 @@ namespace DCPU_floppy_editor
 			return Result;
 		}
 
-		internal ushort[] ConvertToExtentionSig(string Extention)
+		static internal ushort[] ConvertToExtentionSig(string Extention)
 		{
 			ushort[] Result = new ushort[2];
 			char[] Temp = Extention.ToCharArray();
@@ -27,7 +27,7 @@ namespace DCPU_floppy_editor
 			return Result;
 		}
 
-        internal string ConvertToFileNameFromManIdDevId(uint ManID, uint DevID)
+        static internal string ConvertToFileNameFromManIdDevId(uint ManID, uint DevID)
         {
             ushort[] Temp = ConvertToFileSigFromManIdDevId(ManID, DevID);
             char[] TempChar = new char[8];
@@ -45,7 +45,7 @@ namespace DCPU_floppy_editor
             return Result;
         }
 
-        internal ushort[] ConvertToFileSigFromManIdDevId(uint ManID, uint DevID)
+        static internal ushort[] ConvertToFileSigFromManIdDevId(uint ManID, uint DevID)
         {
             ushort[] Temp = new ushort[4];
             Temp[0] = (ushort)ManID;

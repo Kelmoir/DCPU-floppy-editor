@@ -13,6 +13,15 @@ namespace DCPU_floppy_editor
         {
         }
 
+        internal ushort[] GetData()
+        {
+            return Data;
+        }
+        internal uint GetSizeInWords()
+        {
+            return (uint)Data.Length;
+        }
+
         internal int GetSizeInSectors(int SectorSize)
         {
             int Size = 0;

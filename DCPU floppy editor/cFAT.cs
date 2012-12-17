@@ -20,16 +20,19 @@ namespace DCPU_floppy_editor
 	internal class cFAT
 	{
 		private DiskType Mode;
-		private int FatIndex;
-		private int RootDirIndex;
-		private int NumSectors;
-		private int NumFatSectors;
+		private ushort FatIndex;
+		private ushort RootDirIndex;
+		private ushort NumSectors;
+		private ushort NumFatSectors;
 		private cFloppy Floppy;
+        private ushort FistFreeSector;
+        private ushort SectorSize;
 
 		internal cFAT(DiskType ModeOfDisk, cFloppy FloppyToUse)
 		{
 			Mode = ModeOfDisk;
 			Floppy = FloppyToUse;
+            SectorSize = 512;           //might need to change that later on
 		}
 
 		internal bool InitFat()
@@ -48,12 +51,13 @@ namespace DCPU_floppy_editor
 			FatIndex = Floppy.Sectors[0].Memory[8];
 			try
 			{
-				RootDirIndex = FatIndex + (Floppy.Sectors[0].Memory[0xb] / Floppy.Sectors[0].Memory[0xa]);		//when not properly initialized, it can drop an exception (num fat Tables == 0)
+				RootDirIndex = (ushort)(FatIndex + (Floppy.Sectors[0].Memory[0xb] / Floppy.Sectors[0].Memory[0xa]));		//when not properly initialized, it can drop an exception (num fat Tables == 0)
 				if ((Floppy.Sectors[0].Memory[0xb] % Floppy.Sectors[0].Memory[0xa]) != 0)
 				{
 					RootDirIndex++;				//add the half used sector
 				}
-				NumFatSectors = RootDirIndex - FatIndex;
+				NumFatSectors = (ushort)(RootDirIndex - FatIndex);
+                FistFreeSector = RootDirIndex;
 				return true;
 			}
 			catch
@@ -76,17 +80,78 @@ namespace DCPU_floppy_editor
 				Index++;
 			}
 			//the root dir will being created later
-			while (Index < NumSectors)
-			{
-				Floppy.Sectors[FatIndex +(Index >> 9)].Memory[Index  & 0x1FF] = 0x0000;		//same as ./512 and .%512
-				Index++;
-			}
-			Index = 0;
+            ClearUserSpace();
 			return true;
 		}
         internal int GetNumHeaderSectors()
         {
             return NumFatSectors + FatIndex + 1;
+        }
+        internal void ClearUserSpace()
+        {
+            int Index = RootDirIndex;
+            FistFreeSector = RootDirIndex;
+            while (Index < NumSectors)
+            {
+                Floppy.Sectors[FatIndex + (Index >> 9)].Memory[Index & 0x1FF] = 0x0000;		//same as ./512 and .%512
+                Floppy.Sectors[Index] = new cSector();
+                Index++;
+            }
+        }
+
+        internal ushort RegisterSectors(int NumberOfSectors)
+        {
+            ushort FirstSector = FistFreeSector;
+            ushort NextSector = (ushort)(FistFreeSector + 1);
+            while (NumberOfSectors > 0)
+            {
+                //in case the logically next sector is already used, seek for a free one
+                while (Floppy.Sectors[FatIndex + (NextSector >> 9)].Memory[NextSector & 0x1FF] > 0)
+                {
+                    NextSector++;
+                }
+                if (NumberOfSectors > 1)
+                {
+                    Floppy.Sectors[FatIndex + (FistFreeSector >> 9)].Memory[FistFreeSector & 0x1FF] = NextSector;
+                }
+                else
+                {
+                    Floppy.Sectors[FatIndex + (FistFreeSector >> 9)].Memory[FistFreeSector & 0x1FF] = 0xFFFF;
+                }
+                FistFreeSector = NextSector;
+                NextSector++;
+                NumberOfSectors--;
+            }
+            return FirstSector;
+        }
+
+        internal void WriteData(ushort[] Data, ushort FirstSector)
+        {
+            int WriteIndex = 0;
+            ushort WriteSector = FirstSector;
+            while (WriteIndex < Data.Length)
+            {
+                Floppy.Sectors[WriteSector].Memory[WriteIndex & 0x1FF] = Data[WriteIndex];
+                if ((WriteIndex & 0x1FF) == 0x1FF)
+                {
+                    WriteSector = NextSector(WriteSector);
+                }
+                WriteIndex++;
+            }
+        }
+
+        private ushort NextSector(ushort WriteSector)
+        {
+            return Floppy.Sectors[FatIndex + (WriteSector >> 9)].Memory[WriteSector & 0x1FF];
+        }
+
+        internal ushort GetRootDirectoryIndex()
+        {
+            return (ushort)RootDirIndex;
+        }
+        internal ushort GetSectorSize()
+        {
+            return SectorSize;
         }
     }
 }

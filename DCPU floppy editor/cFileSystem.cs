@@ -87,7 +87,21 @@ namespace DCPU_floppy_editor
 
         internal int GetSizeInSectors(int SectorSize)
         {
-            return RootDirectory.GetSizeInSectors(SectorSize) + FAT.GetNumHeaderSectors();
+            return RootDirectory.GetSizeInSectors(SectorSize, true) + FAT.GetNumHeaderSectors();
+        }
+
+        internal bool ConvertToBinary()
+        {
+            try
+            {
+                FAT.ClearUserSpace();
+                RootDirectory.ConvertToBinary(this.FAT, FAT.GetRootDirectoryIndex());
+                return true;
+            }
+            catch
+            {
+                return false;
+            }
         }
     }
 }

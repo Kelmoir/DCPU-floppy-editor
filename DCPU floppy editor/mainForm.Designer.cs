@@ -49,11 +49,11 @@
             this.tbFileName = new System.Windows.Forms.TextBox();
             this.btAddDirectory = new System.Windows.Forms.Button();
             this.groupBox3 = new System.Windows.Forms.GroupBox();
-            this.tbWorkDir = new System.Windows.Forms.TextBox();
             this.dgItemsInWorkingDir = new System.Windows.Forms.DataGridView();
+            this.tbWorkDir = new System.Windows.Forms.TextBox();
             this.groupBox4 = new System.Windows.Forms.GroupBox();
-            this.pbMemoryUsage = new System.Windows.Forms.ProgressBar();
             this.lbSectorsUsed = new System.Windows.Forms.Label();
+            this.pbMemoryUsage = new System.Windows.Forms.ProgressBar();
             this.menuStrip1.SuspendLayout();
             this.Endianess.SuspendLayout();
             this.groupBox1.SuspendLayout();
@@ -109,7 +109,7 @@
             this.cbEndian.Items.AddRange(new object[] {
             "little Endian",
             "big Endian"});
-            this.cbEndian.Location = new System.Drawing.Point(15, 19);
+            this.cbEndian.Location = new System.Drawing.Point(12, 14);
             this.cbEndian.Name = "cbEndian";
             this.cbEndian.Size = new System.Drawing.Size(121, 21);
             this.cbEndian.TabIndex = 2;
@@ -117,7 +117,7 @@
             // Endianess
             // 
             this.Endianess.Controls.Add(this.cbEndian);
-            this.Endianess.Location = new System.Drawing.Point(12, 609);
+            this.Endianess.Location = new System.Drawing.Point(12, 521);
             this.Endianess.Name = "Endianess";
             this.Endianess.Size = new System.Drawing.Size(149, 49);
             this.Endianess.TabIndex = 3;
@@ -146,11 +146,10 @@
             // 
             // groupBox1
             // 
-            this.groupBox1.Controls.Add(this.groupBox4);
             this.groupBox1.Controls.Add(this.groupBox2);
             this.groupBox1.Location = new System.Drawing.Point(12, 130);
             this.groupBox1.Name = "groupBox1";
-            this.groupBox1.Size = new System.Drawing.Size(248, 338);
+            this.groupBox1.Size = new System.Drawing.Size(248, 317);
             this.groupBox1.TabIndex = 6;
             this.groupBox1.TabStop = false;
             this.groupBox1.Text = "Attributes";
@@ -165,7 +164,7 @@
             this.groupBox2.Controls.Add(this.label1);
             this.groupBox2.Controls.Add(this.tbExtention);
             this.groupBox2.Controls.Add(this.tbFileName);
-            this.groupBox2.Location = new System.Drawing.Point(6, 19);
+            this.groupBox2.Location = new System.Drawing.Point(9, 19);
             this.groupBox2.Name = "groupBox2";
             this.groupBox2.Size = new System.Drawing.Size(200, 104);
             this.groupBox2.TabIndex = 0;
@@ -261,14 +260,6 @@
             this.groupBox3.TabStop = false;
             this.groupBox3.Text = "File System view";
             // 
-            // tbWorkDir
-            // 
-            this.tbWorkDir.Location = new System.Drawing.Point(6, 17);
-            this.tbWorkDir.Name = "tbWorkDir";
-            this.tbWorkDir.ReadOnly = true;
-            this.tbWorkDir.Size = new System.Drawing.Size(345, 20);
-            this.tbWorkDir.TabIndex = 9;
-            // 
             // dgItemsInWorkingDir
             // 
             this.dgItemsInWorkingDir.AllowUserToAddRows = false;
@@ -287,23 +278,24 @@
             this.dgItemsInWorkingDir.MouseDoubleClick += new System.Windows.Forms.MouseEventHandler(this.dgItemsInWorkingDir_MouseDoubleClick);
             this.dgItemsInWorkingDir.SelectionChanged += new System.EventHandler(this.dgItemsInWorkingDir_SelectionChanged);
             // 
+            // tbWorkDir
+            // 
+            this.tbWorkDir.Location = new System.Drawing.Point(6, 17);
+            this.tbWorkDir.Name = "tbWorkDir";
+            this.tbWorkDir.ReadOnly = true;
+            this.tbWorkDir.Size = new System.Drawing.Size(345, 20);
+            this.tbWorkDir.TabIndex = 9;
+            // 
             // groupBox4
             // 
             this.groupBox4.Controls.Add(this.lbSectorsUsed);
             this.groupBox4.Controls.Add(this.pbMemoryUsage);
-            this.groupBox4.Location = new System.Drawing.Point(6, 129);
+            this.groupBox4.Location = new System.Drawing.Point(12, 453);
             this.groupBox4.Name = "groupBox4";
-            this.groupBox4.Size = new System.Drawing.Size(200, 62);
+            this.groupBox4.Size = new System.Drawing.Size(248, 62);
             this.groupBox4.TabIndex = 1;
             this.groupBox4.TabStop = false;
             this.groupBox4.Text = "Memory usage";
-            // 
-            // pbMemoryUsage
-            // 
-            this.pbMemoryUsage.Location = new System.Drawing.Point(6, 19);
-            this.pbMemoryUsage.Name = "pbMemoryUsage";
-            this.pbMemoryUsage.Size = new System.Drawing.Size(185, 23);
-            this.pbMemoryUsage.TabIndex = 0;
             // 
             // lbSectorsUsed
             // 
@@ -314,17 +306,25 @@
             this.lbSectorsUsed.TabIndex = 2;
             this.lbSectorsUsed.Text = "unknown";
             // 
+            // pbMemoryUsage
+            // 
+            this.pbMemoryUsage.Location = new System.Drawing.Point(6, 19);
+            this.pbMemoryUsage.Name = "pbMemoryUsage";
+            this.pbMemoryUsage.Size = new System.Drawing.Size(236, 23);
+            this.pbMemoryUsage.TabIndex = 0;
+            // 
             // mainForm
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
             this.ClientSize = new System.Drawing.Size(628, 582);
+            this.Controls.Add(this.groupBox4);
+            this.Controls.Add(this.Endianess);
             this.Controls.Add(this.groupBox3);
             this.Controls.Add(this.btAddDirectory);
             this.Controls.Add(this.groupBox1);
             this.Controls.Add(this.btRemoveItem);
             this.Controls.Add(this.btAddFile);
-            this.Controls.Add(this.Endianess);
             this.Controls.Add(this.menuStrip1);
             this.MainMenuStrip = this.menuStrip1;
             this.Name = "mainForm";

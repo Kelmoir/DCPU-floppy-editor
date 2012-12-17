@@ -36,7 +36,7 @@ namespace DCPU_floppy_editor
         #endregion
 
         #region Get Size in Sectors
-        internal int GetSizeInSectors(int SectorSize)
+        internal int GetSizeInSectors(int SectorSize, bool Recursive)
         {
             int result = 0;
             if (Metadata.Flags.Directory)
@@ -46,8 +46,11 @@ namespace DCPU_floppy_editor
                 {
                     result += 1;
                 }
-                foreach (cFileSystemItem Item in this.Items)
-                    result += Item.GetSizeInSectors(SectorSize);
+                if (Recursive)
+                {
+                    foreach (cFileSystemItem Item in this.Items)
+                        result += Item.GetSizeInSectors(SectorSize, true);
+                }
             }
             else
             {
@@ -195,6 +198,55 @@ namespace DCPU_floppy_editor
             else
             {
                 return 0;
+            }
+        }
+
+        internal ushort ConvertToBinary(cFAT FAT, ushort SupSector)
+        {
+            ushort FirstSector;
+            if (IsDirectory())
+            {
+                ushort[] BinDataTemp = new ushort[(this.Items.Count +1)*Metadata.GetBinaryEntrySize()];
+                ushort[] Temp;
+                int TempIndex = 0;
+                FirstSector = FAT.RegisterSectors(this.GetSizeInSectors(FAT.GetSectorSize(), false));
+                cFileFlags Flags = new cFileFlags();
+                Flags.ReadOnly = true;
+                Flags.Directory = true;
+                cFileSystemItem DirUp = new cFileSystemItem("..", "", Flags, false);
+                Temp = DirUp.Metadata.GetDirectoryBinData(SupSector, 0);
+                for (int i = 0; i < Temp.Length; i++)
+                {
+                    BinDataTemp[TempIndex] = Temp[i];
+                    TempIndex++;
+                }
+                foreach (cFileSystemItem Item in this.Items)
+                {
+                    Temp = Item.Metadata.GetDirectoryBinData(Item.ConvertToBinary(FAT, FirstSector), Item.GetSizeInWordsForDirEntry());
+                    for (int i = 0; i < Temp.Length; i++)
+                    {
+                        BinDataTemp[TempIndex] = Temp[i];
+                        TempIndex++;
+                    }
+                }
+                FAT.WriteData(BinDataTemp, FirstSector);
+            }
+            else
+            {
+                FirstSector = FAT.RegisterSectors(this.GetSizeInSectors(FAT.GetSectorSize(), false));
+                FAT.WriteData(this.File.GetData(), FirstSector);
+            }
+            return FirstSector;
+        }
+        internal uint GetSizeInWordsForDirEntry()
+        {
+            if (IsDirectory())
+            {
+                return 0;       //Directory have always the binary size of 0
+            }
+            else
+            {
+                return (uint)File.GetSizeInWords();
             }
         }
     }
