@@ -56,7 +56,7 @@ namespace DCPU_floppy_editor
 		{
             if (FileSystem.ConvertToBinary())
             {
-                Floppy.Save(cbEndian.SelectedIndex);
+                FileSystem.FAT.SafeFloppy(cbEndian.SelectedIndex);
             }
 		}
 
@@ -105,9 +105,9 @@ namespace DCPU_floppy_editor
         {
             try
             {
-                int UsedSectors = FileSystem.GetSizeInSectors(Floppy.Sectors[0].Memory.Length);
-                lbSectorsUsed.Text = UsedSectors.ToString() + "/" + Floppy.Sectors.Length + " sectors used";
-                pbMemoryUsage.Value = UsedSectors * 100 / Floppy.Sectors.Length;
+                int UsedSectors = FileSystem.GetSizeInSectors(FileSystem.FAT.GetSectorSize());
+                lbSectorsUsed.Text = UsedSectors.ToString() + "/" + FileSystem.FAT.GetNumSectors() + " sectors used";
+                pbMemoryUsage.Value = UsedSectors * 100 / FileSystem.FAT.GetNumSectors();
             }
             catch
             {
@@ -177,6 +177,19 @@ namespace DCPU_floppy_editor
                     UpdateDirectoryView();
                 }
             }
+        }
+
+        private void openFloppyToolStripMenuItem_Click(object sender, EventArgs e)
+        {
+            cBinLoader Loader = new cBinLoader();
+            if (!Loader.LoadBin(cbEndian.SelectedIndex, FileType.fullFloppy))
+                return;
+            cBinReader Reader = new cBinReader(Loader.GetFloppy(512));
+            if (!Reader.ReadBin())
+                return;
+            FileSystem = Reader.GetFileSystem();
+            UpdateDirectoryView();
+            UpdateDiskUsage();
         }
 
     }

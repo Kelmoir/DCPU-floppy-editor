@@ -95,6 +95,7 @@
             this.openFloppyToolStripMenuItem.Name = "openFloppyToolStripMenuItem";
             this.openFloppyToolStripMenuItem.Size = new System.Drawing.Size(152, 22);
             this.openFloppyToolStripMenuItem.Text = "Open Floppy";
+            this.openFloppyToolStripMenuItem.Click += new System.EventHandler(this.openFloppyToolStripMenuItem_Click);
             // 
             // saveFloppyToolStripMenuItem
             // 

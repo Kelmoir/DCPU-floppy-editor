@@ -32,7 +32,7 @@ namespace DCPU_floppy_editor
         private void btAddBootloader_Click(object sender, EventArgs e)
         {
             cBinLoader Loader = new cBinLoader();
-            if (Loader.LoadBin(Master.cbEndian.SelectedIndex))
+            if (Loader.LoadBin(Master.cbEndian.SelectedIndex, FileType.Bootloader))
             {
                 Bootloader = Loader.GetFile(FileType.Bootloader);
                 lbBootloaderStatus.Text = "bootloader status: bootloader loaded";
@@ -48,7 +48,7 @@ namespace DCPU_floppy_editor
         private void btAddKernel_Click(object sender, EventArgs e)
         {
             cBinLoader Loader = new cBinLoader();
-            if (Loader.LoadBin(Master.cbEndian.SelectedIndex))
+            if (Loader.LoadBin(Master.cbEndian.SelectedIndex, FileType.Kernel))
             {
                 Kernel = Loader.GetFile(FileType.Kernel);
                 lbKernelStatus.Text = "kernel status: kernel loaded";
@@ -82,43 +82,15 @@ namespace DCPU_floppy_editor
 
         private bool CheckForValidBootSectors()
         {
-            if (Bootloader.Count > 1)
+            if (Bootloader.Count == 1)
+            {
+                return HeaderVerifier.VerifyFHAT16BootSector(Bootloader[0], (ushort)Kernel.Count, (ushort)Master.Floppy.Sectors.Length);
+            }
+            else
             {
                 MessageBox.Show("Bootloader is too big");
                 return false;
             }
-            if (Bootloader[0].Memory[0] != 0xC382)      //is the Bootable Flag correct?
-            {
-                MessageBox.Show("Incorrect Bootflag");
-                return false;
-            }
-            //now some checks for consistency to the HA FAT
-            if (Bootloader[0].Memory[8] != Kernel.Count)
-            {
-                if (MessageBox.Show("Wrong amount of reserved sectors detected.\r\nCorrect them?", "FAT Inconsistency", MessageBoxButtons.YesNo) == DialogResult.Yes)
-                {
-                    Bootloader[0].Memory[8] = (ushort)Kernel.Count;
-                }
-                else
-                {
-                    return false;
-                }
-            }
-			if (Master.Floppy.Sectors.Length != (int)Bootloader[0].Memory[0xb])
-			{
-				if (MessageBox.Show("Wron amount of sectors specified fot the loaded Device.\r\nCorrect them?", "Device size inconsitency", MessageBoxButtons.YesNo) == DialogResult.Yes)
-                {
-                    Bootloader[0].Memory[0xb] = (ushort)Master.Floppy.Sectors.Length;
-                }
-                else
-                {
-                    return false;
-                }
-			}
-            //and whatever more can go wrong...
-
-
-            return true;
         }
 
     }

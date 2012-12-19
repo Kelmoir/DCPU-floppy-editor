@@ -44,7 +44,7 @@ namespace DCPU_floppy_editor
 			return true;
 		}
 
-		private bool CalcIndixes()
+		internal bool CalcIndixes()
 		{
 			
 			NumSectors = Floppy.Sectors[0].Memory[0xb];
@@ -83,10 +83,20 @@ namespace DCPU_floppy_editor
             ClearUserSpace();
 			return true;
 		}
+
         internal int GetNumHeaderSectors()
         {
             return NumFatSectors + FatIndex + 1;
         }
+        internal int GetNumSectors()
+        {
+            return Floppy.Sectors.Length;
+        }
+        internal void SafeFloppy(int Endian)
+        {
+            Floppy.Save(Endian);
+        }
+
         internal void ClearUserSpace()
         {
             int Index = RootDirIndex;
@@ -140,7 +150,7 @@ namespace DCPU_floppy_editor
             }
         }
 
-        private ushort NextSector(ushort WriteSector)
+        internal ushort NextSector(ushort WriteSector)
         {
             return Floppy.Sectors[FatIndex + (WriteSector >> 9)].Memory[WriteSector & 0x1FF];
         }
@@ -149,6 +159,7 @@ namespace DCPU_floppy_editor
         {
             return (ushort)RootDirIndex;
         }
+
         internal ushort GetSectorSize()
         {
             return SectorSize;

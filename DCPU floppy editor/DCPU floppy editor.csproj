@@ -49,6 +49,7 @@
   </ItemGroup>
   <ItemGroup>
     <Compile Include="cBinLoader.cs" />
+    <Compile Include="cBinReader.cs" />
     <Compile Include="cDcpuTime.cs" />
     <Compile Include="cFile.cs" />
     <Compile Include="cFileSystemItem.cs" />
@@ -60,6 +61,7 @@
     <Compile Include="cFloppy.cs" />
     <Compile Include="cHexInterface.cs" />
     <Compile Include="cSector.cs" />
+    <Compile Include="HeaderVerifier.cs" />
     <Compile Include="mainForm.cs">
       <SubType>Form</SubType>
     </Compile>

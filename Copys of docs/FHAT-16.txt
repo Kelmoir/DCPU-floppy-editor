@@ -1,10 +1,11 @@
 Filesystem
-	The file system is a set of properties that is exemplified by the disk it is used on.
+	The file system proides the abstraction layer from the device layout to files and folders.
 
 Summary:
 	This Filesystem ressembles an common FAT16 Interpretation for the DCPU-16.
 	It will contain the Bootsector,reserved sectors, the FAT sector, and the usuable sectors themselves.
 	All executable files have a header with a relocation table and some other words. This header is located at the end of the file.
+	Unless othe specified, use little endian
 
 Disk layout:
 	Sector              Purpose
@@ -13,7 +14,7 @@ Disk layout:
 	n+2..n+2+fat_size-1  FAT sectors (m is offset 0x9 in the boot sector). 
                              The Number of sectors required to have an entry for each sector defines the FAT size
 	n+2+fat_size         Root directory starting sector 
-	... to ent of Floppy Usable secors
+	... to end of Floppy Usable secors
 
 Boot sector layout:
 	Offset    Size    Purpose
@@ -30,8 +31,8 @@ Boot sector layout:
 Directory table entry layout:
 	[Size is in words, 1B denotes an extra half word]
 	Offset    Size    Purpose
-	0x0        4      Filename (Array of 8 characters)
-	0x4        1+1B   File extension (high byte of second word) of 3 chars
+	0x0        4      Filename (Array of 8 characters) if the name is shorter, Filename must be padded with 0x20
+	0x4        1+1B   File extension (+high byte of second word) (Array of 3 characters) padding: see above
 	0x5        0+1B   File flags (low byte of word)
 	0x6        2      Create datetime
 	0x8        2      Last access datetime
@@ -44,6 +45,12 @@ Directory table entry layout:
 	X/16 = y
 	Were x is the number of sectors allocated to the directory & y is the number of possible entries (includes directories as well as files)
 
+Directory Entrys:
+	every file or subdirectory has an entry in the corresponding Directory.
+	if an enntry is being deleted, the whole Entry must be deleted. If the entry wasn't the last one, the last entry must being moved there, in order to keep conststency
+	The entry".." points to the directory above the current directory and is mandatory. Rootdir of the device points to itself.
+	The entry"." is only implicitly there. It can be used in relative addressing, as "/..." will provide absolute adressing. 
+		Whereas naming the object in the current directory also performs relative addressing
 
 
 Reserved sectors:

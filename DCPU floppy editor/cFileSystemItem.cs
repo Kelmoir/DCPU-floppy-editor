@@ -103,7 +103,6 @@ namespace DCPU_floppy_editor
                 return null;
             }
         }
-
         internal bool IsDirectory()
         {
             return Metadata.Flags.Directory;

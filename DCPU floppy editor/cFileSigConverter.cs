@@ -17,6 +17,47 @@ namespace DCPU_floppy_editor
 			Result[3] = (ushort)(Convert.ToByte(Temp[6]) << 8 | Convert.ToByte(Temp[7]));
 			return Result;
 		}
+        static internal string ConvertToFileName(ushort[] Data)
+        {
+            try
+            {
+                char[] TempChar = new char[8];
+                TempChar[1] = Convert.ToChar((byte)Data[0]);
+                TempChar[0] = Convert.ToChar((byte)(Data[0] >> 8));
+                TempChar[3] = Convert.ToChar((byte)Data[1]);
+                TempChar[2] = Convert.ToChar((byte)(Data[1] >> 8));
+                TempChar[5] = Convert.ToChar((byte)Data[2]);
+                TempChar[4] = Convert.ToChar((byte)(Data[2] >> 8));
+                TempChar[7] = Convert.ToChar((byte)Data[3]);
+                TempChar[6] = Convert.ToChar((byte)(Data[3] >> 8));
+                string Result = "";
+                foreach (char Item in TempChar)
+                    Result += Convert.ToString(Item);
+                return Result;
+            }
+            catch
+            {
+                return "";
+            }
+        }
+        static internal string ConvertToFileExtention(ushort[] Data)
+        {
+            try
+            {
+                char[] TempChar = new char[3];
+                TempChar[1] = Convert.ToChar((byte)Data[0]);
+                TempChar[0] = Convert.ToChar((byte)(Data[0] >> 8));
+                TempChar[2] = Convert.ToChar((byte)(Data[1] >> 8));
+                string Result = "";
+                foreach (char Item in TempChar)
+                    Result += Convert.ToString(Item);
+                return Result;
+            }
+            catch
+            {
+                return "";
+            }
+        }
 
 		static internal ushort[] ConvertToExtentionSig(string Extention)
 		{

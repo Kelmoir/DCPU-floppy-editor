@@ -49,7 +49,7 @@ namespace DCPU_floppy_editor
         private void btReadFile_Click(object sender, EventArgs e)
         {
             cBinLoader Loader = new cBinLoader();
-            if (Loader.LoadBin(Endian))
+            if (Loader.LoadBin(Endian, FileType.File))
             {
                 cFile File = new cFile();
                 File.SetFileData(Loader.GetReadOut());

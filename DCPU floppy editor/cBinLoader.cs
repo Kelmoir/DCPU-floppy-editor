@@ -8,18 +8,28 @@ namespace DCPU_floppy_editor
 {
     public enum FileType
     {
-        Bootloader = 0, Kernel = 1, File = 2
+        Bootloader = 0, Kernel = 1, File = 2, fullFloppy = 3
     };
     class cBinLoader
     {
         List<ushort> Readout;
-        internal bool LoadBin(int Endian)
+        internal bool LoadBin(int Endian, FileType Mode)
         {
             Readout = new List<ushort>();
             OpenFileDialog Dialog = new OpenFileDialog();
-            Dialog.Title = "Select the uncompressed bin file to open";
-            Dialog.DefaultExt = "bin";
-            Dialog.Filter = "binary files (*.bin)|*.bin|All files (*.*)|*.*";
+            if (Mode == FileType.fullFloppy)
+            {
+                Dialog.Title = "Select the DCPU disk file to open";
+                Dialog.DefaultExt = "dsk";
+                Dialog.Filter = "DCPU disk files (*.dsk)|*.dsk|All files (*.*)|*.*";
+            }
+            else
+            {
+                Dialog.Title = "Select the uncompressed binary file to open";
+                Dialog.DefaultExt = "bin";
+                Dialog.Filter = "binary files (*.bin)|*.bin|All files (*.*)|*.*";
+            }
+            
             if (Dialog.ShowDialog() == DialogResult.OK)
             {
                 System.IO.Stream Input;
@@ -67,7 +77,7 @@ namespace DCPU_floppy_editor
             cSector WorkingSector = new cSector();
             int ReadoutIndex = 0;
             int IntSectorIndex = 0;
-            if (Type == FileType.Bootloader || Type == FileType.Kernel)
+            if (Type == FileType.Bootloader || Type == FileType.Kernel || Type == FileType.fullFloppy)
             {
                 //atm no special actions required...
             }
@@ -100,6 +110,29 @@ namespace DCPU_floppy_editor
             }
             return Result;
         }
-
+        internal cFloppy GetFloppy(int SectorSize)
+        {
+            int NumSectors = Readout.Count / SectorSize;
+            if ((Readout.Count % SectorSize) != 0)
+            {
+                NumSectors++;
+            }
+            cFloppy result = new cFloppy(NumSectors);
+            int SectorIndex = 0;
+            int SectorPos = 0;
+            int ReadoutPos = 0;
+            while (SectorIndex < NumSectors)
+            {
+                while (SectorPos < SectorSize && ReadoutPos < Readout.Count)
+                {
+                    result.Sectors[SectorIndex].Memory[SectorPos] = Readout[ReadoutPos];
+                    SectorPos++;
+                    ReadoutPos++; 
+                }
+                SectorPos = 0;
+                SectorIndex++;
+            }
+            return result;
+        }
     }
 }

@@ -71,6 +71,10 @@ namespace DCPU_floppy_editor
                 Result += "X";
             else
                 Result += " ";
+            if (SystemFile)
+                Result += "S";
+            else
+                Result += " ";
             if (Hidden)
                 Result += "h";
             else
@@ -81,5 +85,15 @@ namespace DCPU_floppy_editor
                 Result += " ";
             return Result;
         }
-	}
+
+        internal void ReadFromBinary(byte FlagByte)
+        {
+            ReadOnly = ((FlagByte & 0x01) == 0x01);
+            Hidden = ((FlagByte & 0x02) == 0x02);
+            SystemFile = ((FlagByte & 0x04) == 0x04);
+            Directory = ((FlagByte & 0x10) == 0x10);
+            Archive = ((FlagByte & 0x20) == 0x20);
+            Executable = ((FlagByte & 0x40) == 0x40);
+        }
+    }
 }
