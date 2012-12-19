@@ -248,5 +248,11 @@ namespace DCPU_floppy_editor
                 return (uint)File.GetSizeInWords();
             }
         }
+
+        internal void ReadFile(int Endian)
+        {
+            if (!IsDirectory())
+                File.ReadFile(Endian);
+        }
     }
 }

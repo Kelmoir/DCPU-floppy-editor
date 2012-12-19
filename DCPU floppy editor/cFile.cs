@@ -50,5 +50,13 @@ namespace DCPU_floppy_editor
         {
             return (Data == null);
         }
+        internal void ReadFile(int Endian)
+        {
+            cBinLoader Loader = new cBinLoader();
+            if (Loader.LoadBin(Endian, FileType.File))
+            {
+                this.SetFileData(Loader.GetReadOut());
+            }
+        }
     }
 }

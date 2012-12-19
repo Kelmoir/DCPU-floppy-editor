@@ -145,10 +145,35 @@ namespace DCPU_floppy_editor
             {
                 if (dgItemsInWorkingDir.SelectedRows[0].Index > -1)
                 {
+                    cFileSystemItem Temp = FileSystem.GetItemByIndex((int)dgItemsInWorkingDir.Rows[dgItemsInWorkingDir.SelectedRows[0].Index].Cells["Index"].Value);
+                    tbFileName.Text = Temp.Metadata.GetName();
+                    cbHidden.Checked = Temp.Metadata.Flags.Hidden;
+                    cbReadOnly.Checked = Temp.Metadata.Flags.ReadOnly;
+                    if (!Temp.IsDirectory())
                     {
-                        cFileSystemItem Temp = FileSystem.GetItemByIndex((int)dgItemsInWorkingDir.Rows[dgItemsInWorkingDir.SelectedRows[0].Index].Cells["Index"].Value);
+                        cbSystemFile.Checked = Temp.Metadata.Flags.SystemFile;
+                        cbExecutable.Checked = Temp.Metadata.Flags.Executable;
+                        cbArchive.Checked = Temp.Metadata.Flags.Archive;
+                        cbExecutable.Visible = true;
+                        cbSystemFile.Visible = true;
+                        cbArchive.Visible = true;
+                        btChangeFile.Visible = true;
+                        lbDot.Visible = true;
+                        tbExtention.Visible = true;
                         tbExtention.Text = Temp.Metadata.GetExtention();
-                        tbFileName.Text = Temp.Metadata.GetName();
+                    }
+                    else
+                    {
+                        cbSystemFile.Checked = false;
+                        cbExecutable.Checked = false;
+                        cbArchive.Checked = false;
+                        cbExecutable.Visible = false;
+                        cbSystemFile.Visible = false;
+                        cbArchive.Visible = false;
+                        btChangeFile.Visible = false;
+                        lbDot.Visible = false;
+                        tbExtention.Visible = false;
+                        tbExtention.Text = "";
                     }
                 }
                 else
@@ -162,6 +187,17 @@ namespace DCPU_floppy_editor
         {
             tbExtention.Text = "";
             tbFileName.Text = "";
+            cbSystemFile.Checked = false;
+            cbExecutable.Checked = false;
+            cbArchive.Checked = false;
+            cbHidden.Checked = false;
+            cbReadOnly.Checked = false;
+            cbExecutable.Visible = true;
+            cbSystemFile.Visible = true;
+            cbArchive.Visible = true;
+            btChangeFile.Visible = true;
+            lbDot.Visible = true;
+            tbExtention.Visible = true;
         }
 
         private void dgItemsInWorkingDir_MouseDoubleClick(object sender, MouseEventArgs e)
@@ -187,6 +223,27 @@ namespace DCPU_floppy_editor
             UpdateDirectoryView();
             UpdateDiskUsage();
         }
+
+        private void btSaveName_Click(object sender, EventArgs e)
+        {
+            cFileSystemItem Temp = FileSystem.GetItemByIndex((int)dgItemsInWorkingDir.Rows[dgItemsInWorkingDir.SelectedRows[0].Index].Cells["Index"].Value);
+            Temp.Metadata.SetName(tbFileName.Text);
+            Temp.Metadata.SetExtension(tbExtention.Text);
+            Temp.Metadata.Flags.Archive = cbArchive.Checked;
+            Temp.Metadata.Flags.Executable = cbExecutable.Checked;
+            Temp.Metadata.Flags.Hidden = cbHidden.Checked;
+            Temp.Metadata.Flags.ReadOnly = cbReadOnly.Checked;
+            Temp.Metadata.Flags.SystemFile = cbSystemFile.Checked;
+            UpdateDirectoryView();
+        }
+
+        private void btChangeFile_Click(object sender, EventArgs e)
+        {
+            cFileSystemItem Temp = FileSystem.GetItemByIndex((int)dgItemsInWorkingDir.Rows[dgItemsInWorkingDir.SelectedRows[0].Index].Cells["Index"].Value);
+            Temp.ReadFile(cbEndian.SelectedIndex);
+            UpdateDiskUsage();
+        }
+
 
     }
 }

@@ -38,8 +38,16 @@
             this.btAddFile = new System.Windows.Forms.Button();
             this.btRemoveItem = new System.Windows.Forms.Button();
             this.groupBox1 = new System.Windows.Forms.GroupBox();
+            this.btChangeFile = new System.Windows.Forms.Button();
+            this.btSaveName = new System.Windows.Forms.Button();
+            this.groupBox5 = new System.Windows.Forms.GroupBox();
+            this.cbArchive = new System.Windows.Forms.CheckBox();
+            this.cbExecutable = new System.Windows.Forms.CheckBox();
+            this.cbSystemFile = new System.Windows.Forms.CheckBox();
+            this.cbHidden = new System.Windows.Forms.CheckBox();
+            this.cbReadOnly = new System.Windows.Forms.CheckBox();
             this.groupBox2 = new System.Windows.Forms.GroupBox();
-            this.label1 = new System.Windows.Forms.Label();
+            this.lbDot = new System.Windows.Forms.Label();
             this.tbExtention = new System.Windows.Forms.TextBox();
             this.tbFileName = new System.Windows.Forms.TextBox();
             this.btAddDirectory = new System.Windows.Forms.Button();
@@ -52,6 +60,7 @@
             this.menuStrip1.SuspendLayout();
             this.Endianess.SuspendLayout();
             this.groupBox1.SuspendLayout();
+            this.groupBox5.SuspendLayout();
             this.groupBox2.SuspendLayout();
             this.groupBox3.SuspendLayout();
             ((System.ComponentModel.ISupportInitialize)(this.dgItemsInWorkingDir)).BeginInit();
@@ -81,21 +90,21 @@
             // NewFloppyToolStripMenuItem
             // 
             this.NewFloppyToolStripMenuItem.Name = "NewFloppyToolStripMenuItem";
-            this.NewFloppyToolStripMenuItem.Size = new System.Drawing.Size(152, 22);
+            this.NewFloppyToolStripMenuItem.Size = new System.Drawing.Size(142, 22);
             this.NewFloppyToolStripMenuItem.Text = " New Floppy";
             this.NewFloppyToolStripMenuItem.Click += new System.EventHandler(this.NewFloppyToolStripMenuItem_Click);
             // 
             // openFloppyToolStripMenuItem
             // 
             this.openFloppyToolStripMenuItem.Name = "openFloppyToolStripMenuItem";
-            this.openFloppyToolStripMenuItem.Size = new System.Drawing.Size(152, 22);
+            this.openFloppyToolStripMenuItem.Size = new System.Drawing.Size(142, 22);
             this.openFloppyToolStripMenuItem.Text = "Open Floppy";
             this.openFloppyToolStripMenuItem.Click += new System.EventHandler(this.openFloppyToolStripMenuItem_Click);
             // 
             // saveFloppyToolStripMenuItem
             // 
             this.saveFloppyToolStripMenuItem.Name = "saveFloppyToolStripMenuItem";
-            this.saveFloppyToolStripMenuItem.Size = new System.Drawing.Size(152, 22);
+            this.saveFloppyToolStripMenuItem.Size = new System.Drawing.Size(142, 22);
             this.saveFloppyToolStripMenuItem.Text = "Save Floppy";
             this.saveFloppyToolStripMenuItem.Click += new System.EventHandler(this.saveFloppyToolStripMenuItem_Click);
             // 
@@ -112,6 +121,7 @@
             // 
             // Endianess
             // 
+            this.Endianess.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Bottom | System.Windows.Forms.AnchorStyles.Left)));
             this.Endianess.Controls.Add(this.cbEndian);
             this.Endianess.Location = new System.Drawing.Point(12, 521);
             this.Endianess.Name = "Endianess";
@@ -142,41 +152,128 @@
             // 
             // groupBox1
             // 
+            this.groupBox1.Controls.Add(this.btChangeFile);
+            this.groupBox1.Controls.Add(this.btSaveName);
+            this.groupBox1.Controls.Add(this.groupBox5);
             this.groupBox1.Controls.Add(this.groupBox2);
             this.groupBox1.Location = new System.Drawing.Point(12, 130);
             this.groupBox1.Name = "groupBox1";
-            this.groupBox1.Size = new System.Drawing.Size(248, 317);
+            this.groupBox1.Size = new System.Drawing.Size(248, 210);
             this.groupBox1.TabIndex = 6;
             this.groupBox1.TabStop = false;
             this.groupBox1.Text = "Attributes";
             // 
+            // btChangeFile
+            // 
+            this.btChangeFile.Location = new System.Drawing.Point(127, 162);
+            this.btChangeFile.Name = "btChangeFile";
+            this.btChangeFile.Size = new System.Drawing.Size(112, 37);
+            this.btChangeFile.TabIndex = 11;
+            this.btChangeFile.Text = "Change file";
+            this.btChangeFile.UseVisualStyleBackColor = true;
+            this.btChangeFile.Click += new System.EventHandler(this.btChangeFile_Click);
+            // 
+            // btSaveName
+            // 
+            this.btSaveName.Location = new System.Drawing.Point(9, 162);
+            this.btSaveName.Name = "btSaveName";
+            this.btSaveName.Size = new System.Drawing.Size(112, 37);
+            this.btSaveName.TabIndex = 10;
+            this.btSaveName.Text = "Save changes to name and flags";
+            this.btSaveName.UseVisualStyleBackColor = true;
+            this.btSaveName.Click += new System.EventHandler(this.btSaveName_Click);
+            // 
+            // groupBox5
+            // 
+            this.groupBox5.Controls.Add(this.cbArchive);
+            this.groupBox5.Controls.Add(this.cbExecutable);
+            this.groupBox5.Controls.Add(this.cbSystemFile);
+            this.groupBox5.Controls.Add(this.cbHidden);
+            this.groupBox5.Controls.Add(this.cbReadOnly);
+            this.groupBox5.Location = new System.Drawing.Point(9, 70);
+            this.groupBox5.Name = "groupBox5";
+            this.groupBox5.Size = new System.Drawing.Size(233, 86);
+            this.groupBox5.TabIndex = 3;
+            this.groupBox5.TabStop = false;
+            this.groupBox5.Text = "Flags";
+            // 
+            // cbArchive
+            // 
+            this.cbArchive.AutoSize = true;
+            this.cbArchive.Location = new System.Drawing.Point(6, 65);
+            this.cbArchive.Name = "cbArchive";
+            this.cbArchive.Size = new System.Drawing.Size(62, 17);
+            this.cbArchive.TabIndex = 16;
+            this.cbArchive.Text = "Archive";
+            this.cbArchive.UseVisualStyleBackColor = true;
+            // 
+            // cbExecutable
+            // 
+            this.cbExecutable.AutoSize = true;
+            this.cbExecutable.Location = new System.Drawing.Point(122, 42);
+            this.cbExecutable.Name = "cbExecutable";
+            this.cbExecutable.Size = new System.Drawing.Size(79, 17);
+            this.cbExecutable.TabIndex = 15;
+            this.cbExecutable.Text = "Executable";
+            this.cbExecutable.UseVisualStyleBackColor = true;
+            // 
+            // cbSystemFile
+            // 
+            this.cbSystemFile.AutoSize = true;
+            this.cbSystemFile.Location = new System.Drawing.Point(122, 19);
+            this.cbSystemFile.Name = "cbSystemFile";
+            this.cbSystemFile.Size = new System.Drawing.Size(76, 17);
+            this.cbSystemFile.TabIndex = 14;
+            this.cbSystemFile.Text = "System file";
+            this.cbSystemFile.UseVisualStyleBackColor = true;
+            // 
+            // cbHidden
+            // 
+            this.cbHidden.AutoSize = true;
+            this.cbHidden.Location = new System.Drawing.Point(6, 42);
+            this.cbHidden.Name = "cbHidden";
+            this.cbHidden.Size = new System.Drawing.Size(60, 17);
+            this.cbHidden.TabIndex = 13;
+            this.cbHidden.Text = "Hidden";
+            this.cbHidden.UseVisualStyleBackColor = true;
+            // 
+            // cbReadOnly
+            // 
+            this.cbReadOnly.AutoSize = true;
+            this.cbReadOnly.Location = new System.Drawing.Point(6, 19);
+            this.cbReadOnly.Name = "cbReadOnly";
+            this.cbReadOnly.Size = new System.Drawing.Size(74, 17);
+            this.cbReadOnly.TabIndex = 12;
+            this.cbReadOnly.Text = "Read only";
+            this.cbReadOnly.UseVisualStyleBackColor = true;
+            // 
             // groupBox2
             // 
-            this.groupBox2.Controls.Add(this.label1);
+            this.groupBox2.Controls.Add(this.lbDot);
             this.groupBox2.Controls.Add(this.tbExtention);
             this.groupBox2.Controls.Add(this.tbFileName);
             this.groupBox2.Location = new System.Drawing.Point(9, 19);
             this.groupBox2.Name = "groupBox2";
-            this.groupBox2.Size = new System.Drawing.Size(233, 104);
+            this.groupBox2.Size = new System.Drawing.Size(233, 45);
             this.groupBox2.TabIndex = 0;
             this.groupBox2.TabStop = false;
             this.groupBox2.Text = "Name";
             // 
-            // label1
+            // lbDot
             // 
-            this.label1.AutoSize = true;
-            this.label1.Font = new System.Drawing.Font("Arial Black", 8.25F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            this.label1.Location = new System.Drawing.Point(105, 23);
-            this.label1.Name = "label1";
-            this.label1.Size = new System.Drawing.Size(11, 15);
-            this.label1.TabIndex = 1;
-            this.label1.Text = ".";
+            this.lbDot.AutoSize = true;
+            this.lbDot.Font = new System.Drawing.Font("Arial Black", 8.25F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+            this.lbDot.Location = new System.Drawing.Point(112, 21);
+            this.lbDot.Name = "lbDot";
+            this.lbDot.Size = new System.Drawing.Size(11, 15);
+            this.lbDot.TabIndex = 1;
+            this.lbDot.Text = ".";
             // 
             // tbExtention
             // 
-            this.tbExtention.Location = new System.Drawing.Point(116, 19);
+            this.tbExtention.Location = new System.Drawing.Point(122, 19);
             this.tbExtention.Name = "tbExtention";
-            this.tbExtention.Size = new System.Drawing.Size(37, 20);
+            this.tbExtention.Size = new System.Drawing.Size(48, 20);
             this.tbExtention.TabIndex = 1;
             // 
             // tbFileName
@@ -230,6 +327,8 @@
             // 
             // tbWorkDir
             // 
+            this.tbWorkDir.Anchor = ((System.Windows.Forms.AnchorStyles)(((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Left)
+                        | System.Windows.Forms.AnchorStyles.Right)));
             this.tbWorkDir.Location = new System.Drawing.Point(6, 17);
             this.tbWorkDir.Name = "tbWorkDir";
             this.tbWorkDir.ReadOnly = true;
@@ -238,6 +337,7 @@
             // 
             // groupBox4
             // 
+            this.groupBox4.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Bottom | System.Windows.Forms.AnchorStyles.Left)));
             this.groupBox4.Controls.Add(this.lbSectorsUsed);
             this.groupBox4.Controls.Add(this.pbMemoryUsage);
             this.groupBox4.Location = new System.Drawing.Point(12, 453);
@@ -283,6 +383,8 @@
             this.menuStrip1.PerformLayout();
             this.Endianess.ResumeLayout(false);
             this.groupBox1.ResumeLayout(false);
+            this.groupBox5.ResumeLayout(false);
+            this.groupBox5.PerformLayout();
             this.groupBox2.ResumeLayout(false);
             this.groupBox2.PerformLayout();
             this.groupBox3.ResumeLayout(false);
@@ -308,7 +410,7 @@
         private System.Windows.Forms.GroupBox groupBox1;
         private System.Windows.Forms.GroupBox groupBox2;
         private System.Windows.Forms.TextBox tbFileName;
-        private System.Windows.Forms.Label label1;
+        private System.Windows.Forms.Label lbDot;
         private System.Windows.Forms.TextBox tbExtention;
         internal System.Windows.Forms.ComboBox cbEndian;
         private System.Windows.Forms.Button btAddDirectory;
@@ -318,6 +420,14 @@
         private System.Windows.Forms.GroupBox groupBox4;
         private System.Windows.Forms.ProgressBar pbMemoryUsage;
         private System.Windows.Forms.Label lbSectorsUsed;
+        private System.Windows.Forms.GroupBox groupBox5;
+        private System.Windows.Forms.Button btChangeFile;
+        private System.Windows.Forms.Button btSaveName;
+        private System.Windows.Forms.CheckBox cbExecutable;
+        private System.Windows.Forms.CheckBox cbSystemFile;
+        private System.Windows.Forms.CheckBox cbHidden;
+        private System.Windows.Forms.CheckBox cbReadOnly;
+        private System.Windows.Forms.CheckBox cbArchive;
     }
 }
 
