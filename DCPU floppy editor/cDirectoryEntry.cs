@@ -16,10 +16,6 @@ namespace DCPU_floppy_editor
 		//one ushort reserved, according to spec
 		internal ushort Reserved;
 
-        private bool Driver;
-        internal uint ManID;
-        internal uint DevID;
-
 		#region Constructor
 		internal cDirectoryEntry(string NewName, string NewExtention, cFileFlags NewFlags)
 		{
@@ -75,25 +71,13 @@ namespace DCPU_floppy_editor
             return 16;
         }
 
-        internal void SetManIdAndDevId(uint ManID, uint DevID)
-        {
-            if (Driver)
-            {
-                this.ManID = ManID;
-                this.DevID = DevID;
-            }
-        }
-
         internal void SetName(string NewName)
         {
-            if (!Driver)
-            {
-                if (NewName.Length > 8)
-                    NewName = NewName.Substring(0, 8);
-                while (NewName.Length < 8)
-                    NewName += " ";
-                Name = NewName;
-            }
+            if (NewName.Length > 8)
+                NewName = NewName.Substring(0, 8);
+            while (NewName.Length < 8)
+                NewName += " ";
+            Name = NewName;
         }
         internal void SetExtension(string NewExtention)
         {
@@ -117,17 +101,9 @@ namespace DCPU_floppy_editor
         public override string ToString()
         {
             string Result;
-            if (!Driver)
+            Result = Name;
+            if (!Flags.Directory)
             {
-                Result = Name;
-                if (!Flags.Directory)
-                {
-                    Result += "." + Extention;
-                }
-            }
-            else
-            {
-                Result = cHexInterface.ConvertToString(ManID);
                 Result += "." + Extention;
             }
             while (Result.Length < 15)
@@ -137,14 +113,7 @@ namespace DCPU_floppy_editor
         }
         internal string GetName()
         {
-            if (Driver)
-            {
-                return "";
-            }
-            else
-            {
-                return Name;
-            }
+            return Name;
         }
         internal string GetExtention()
         {
@@ -153,32 +122,6 @@ namespace DCPU_floppy_editor
         internal string GetFlagsString()
         {
             return Flags.ToString();
-        }
-        internal string GetManIDstring()
-        {
-            if (Driver)
-            {
-                return cHexInterface.ConvertToString(ManID);
-            }
-            else
-            {
-                return "";
-            }
-        }
-        internal string GetDevIDstring()
-        {
-            if (Driver)
-            {
-                return cHexInterface.ConvertToString(DevID);
-            }
-            else
-            {
-                return "";
-            }
-        }
-        internal void MakeDriver()
-        {
-            Driver = true;
         }
     }
 }

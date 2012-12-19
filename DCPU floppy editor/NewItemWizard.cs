@@ -23,27 +23,12 @@ namespace DCPU_floppy_editor
             {
                 gbNewExtension.Visible = false;
                 cbExecutable.Visible = false;
-                cbDriver.Visible = false;
                 btReadFile.Visible = false;
                 cbSystemFile.Visible = false;
                 cbArchive.Visible = false;
             }
             NewItem = new cFileSystemItem("", "", Flags, false);
             Endian = Endianess;
-        }
-
-        private void cbDriver_CheckedChanged(object sender, EventArgs e)
-        {
-            if (cbDriver.Checked)
-            {
-                gbNewName.Text = "ManID (0x...)";
-                gbNewExtension.Text = "DevID (0x...)";
-            }
-            else
-            {
-                gbNewName.Text = "Name (max 8 chars)";
-                gbNewExtension.Text = "Extension (3 chars)";
-            }
         }
 
         private void btReadFile_Click(object sender, EventArgs e)
@@ -72,38 +57,19 @@ namespace DCPU_floppy_editor
             NewItem.Metadata.Flags.Hidden = cbHidden.Checked;
             NewItem.Metadata.Flags.ReadOnly = cbReadOnly.Checked;
             NewItem.Metadata.Flags.SystemFile = cbSystemFile.Checked;
-            if (!cbDriver.Checked)
+            if (tbNewName.Text != "")
+                NewItem.Metadata.SetName(tbNewName.Text);
+            else
+                return;
+            if (!NewItem.Metadata.Flags.Directory)
             {
-                if (tbNewName.Text != "")
-                    NewItem.Metadata.SetName(tbNewName.Text);
+                if (tbNewExtension.Text != "")
+                    NewItem.Metadata.SetExtension(tbNewExtension.Text);
                 else
                     return;
-                if (!NewItem.Metadata.Flags.Directory)
-                {
-                    if (tbNewExtension.Text != "")
-                        NewItem.Metadata.SetExtension(tbNewExtension.Text);
-                    else
-                        return;
-                }
-                DialogResult = DialogResult.OK;
-                this.Close();
             }
-            else
-            {
-                try
-                {
-                    NewItem.Metadata.MakeDriver();
-                    NewItem.Metadata.SetManIdAndDevId(cHexInterface.ConvertToUint(tbNewName.Text), cHexInterface.ConvertToUint(tbNewExtension.Text));
-                }
-                catch (Exception ex)
-                {
-                    MessageBox.Show("Error converting the MaID and the DevID.\r\n\r\n" + ex.Message);
-                    return;
-                }
-                NewItem.Metadata.Extention = "drv";
-                DialogResult = DialogResult.OK;
-                this.Close();
-            }
+            DialogResult = DialogResult.OK;
+            this.Close();
         }
 
     }

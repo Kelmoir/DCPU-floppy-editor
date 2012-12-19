@@ -35,13 +35,12 @@
             this.btCreate = new System.Windows.Forms.Button();
             this.btCancel = new System.Windows.Forms.Button();
             this.gbFlags = new System.Windows.Forms.GroupBox();
-            this.cbArchive = new System.Windows.Forms.CheckBox();
-            this.cbReadOnly = new System.Windows.Forms.CheckBox();
-            this.cbHidden = new System.Windows.Forms.CheckBox();
-            this.cbExecutable = new System.Windows.Forms.CheckBox();
             this.cbSystemFile = new System.Windows.Forms.CheckBox();
+            this.cbExecutable = new System.Windows.Forms.CheckBox();
+            this.cbHidden = new System.Windows.Forms.CheckBox();
+            this.cbReadOnly = new System.Windows.Forms.CheckBox();
+            this.cbArchive = new System.Windows.Forms.CheckBox();
             this.btReadFile = new System.Windows.Forms.Button();
-            this.cbDriver = new System.Windows.Forms.CheckBox();
             this.gbNewName.SuspendLayout();
             this.gbNewExtension.SuspendLayout();
             this.gbFlags.SuspendLayout();
@@ -103,7 +102,6 @@
             // 
             // gbFlags
             // 
-            this.gbFlags.Controls.Add(this.cbDriver);
             this.gbFlags.Controls.Add(this.cbSystemFile);
             this.gbFlags.Controls.Add(this.cbExecutable);
             this.gbFlags.Controls.Add(this.cbHidden);
@@ -116,35 +114,15 @@
             this.gbFlags.TabStop = false;
             this.gbFlags.Text = "Flags";
             // 
-            // cbArchive
+            // cbSystemFile
             // 
-            this.cbArchive.AutoSize = true;
-            this.cbArchive.Location = new System.Drawing.Point(6, 19);
-            this.cbArchive.Name = "cbArchive";
-            this.cbArchive.Size = new System.Drawing.Size(62, 17);
-            this.cbArchive.TabIndex = 6;
-            this.cbArchive.Text = "Archive";
-            this.cbArchive.UseVisualStyleBackColor = true;
-            // 
-            // cbReadOnly
-            // 
-            this.cbReadOnly.AutoSize = true;
-            this.cbReadOnly.Location = new System.Drawing.Point(6, 42);
-            this.cbReadOnly.Name = "cbReadOnly";
-            this.cbReadOnly.Size = new System.Drawing.Size(74, 17);
-            this.cbReadOnly.TabIndex = 7;
-            this.cbReadOnly.Text = "Read only";
-            this.cbReadOnly.UseVisualStyleBackColor = true;
-            // 
-            // cbHidden
-            // 
-            this.cbHidden.AutoSize = true;
-            this.cbHidden.Location = new System.Drawing.Point(127, 19);
-            this.cbHidden.Name = "cbHidden";
-            this.cbHidden.Size = new System.Drawing.Size(60, 17);
-            this.cbHidden.TabIndex = 6;
-            this.cbHidden.Text = "Hidden";
-            this.cbHidden.UseVisualStyleBackColor = true;
+            this.cbSystemFile.AutoSize = true;
+            this.cbSystemFile.Location = new System.Drawing.Point(6, 65);
+            this.cbSystemFile.Name = "cbSystemFile";
+            this.cbSystemFile.Size = new System.Drawing.Size(76, 17);
+            this.cbSystemFile.TabIndex = 9;
+            this.cbSystemFile.Text = "System file";
+            this.cbSystemFile.UseVisualStyleBackColor = true;
             // 
             // cbExecutable
             // 
@@ -156,15 +134,35 @@
             this.cbExecutable.Text = "Executable";
             this.cbExecutable.UseVisualStyleBackColor = true;
             // 
-            // cbSystemFile
+            // cbHidden
             // 
-            this.cbSystemFile.AutoSize = true;
-            this.cbSystemFile.Location = new System.Drawing.Point(6, 65);
-            this.cbSystemFile.Name = "cbSystemFile";
-            this.cbSystemFile.Size = new System.Drawing.Size(76, 17);
-            this.cbSystemFile.TabIndex = 9;
-            this.cbSystemFile.Text = "System file";
-            this.cbSystemFile.UseVisualStyleBackColor = true;
+            this.cbHidden.AutoSize = true;
+            this.cbHidden.Location = new System.Drawing.Point(127, 19);
+            this.cbHidden.Name = "cbHidden";
+            this.cbHidden.Size = new System.Drawing.Size(60, 17);
+            this.cbHidden.TabIndex = 6;
+            this.cbHidden.Text = "Hidden";
+            this.cbHidden.UseVisualStyleBackColor = true;
+            // 
+            // cbReadOnly
+            // 
+            this.cbReadOnly.AutoSize = true;
+            this.cbReadOnly.Location = new System.Drawing.Point(6, 42);
+            this.cbReadOnly.Name = "cbReadOnly";
+            this.cbReadOnly.Size = new System.Drawing.Size(74, 17);
+            this.cbReadOnly.TabIndex = 7;
+            this.cbReadOnly.Text = "Read only";
+            this.cbReadOnly.UseVisualStyleBackColor = true;
+            // 
+            // cbArchive
+            // 
+            this.cbArchive.AutoSize = true;
+            this.cbArchive.Location = new System.Drawing.Point(6, 19);
+            this.cbArchive.Name = "cbArchive";
+            this.cbArchive.Size = new System.Drawing.Size(62, 17);
+            this.cbArchive.TabIndex = 6;
+            this.cbArchive.Text = "Archive";
+            this.cbArchive.UseVisualStyleBackColor = true;
             // 
             // btReadFile
             // 
@@ -175,17 +173,6 @@
             this.btReadFile.Text = "Read File";
             this.btReadFile.UseVisualStyleBackColor = true;
             this.btReadFile.Click += new System.EventHandler(this.btReadFile_Click);
-            // 
-            // cbDriver
-            // 
-            this.cbDriver.AutoSize = true;
-            this.cbDriver.Location = new System.Drawing.Point(127, 65);
-            this.cbDriver.Name = "cbDriver";
-            this.cbDriver.Size = new System.Drawing.Size(54, 17);
-            this.cbDriver.TabIndex = 10;
-            this.cbDriver.Text = "Driver";
-            this.cbDriver.UseVisualStyleBackColor = true;
-            this.cbDriver.CheckedChanged += new System.EventHandler(this.cbDriver_CheckedChanged);
             // 
             // NewItemWizard
             // 
@@ -223,7 +210,6 @@
         private System.Windows.Forms.CheckBox cbReadOnly;
         private System.Windows.Forms.CheckBox cbArchive;
         private System.Windows.Forms.CheckBox cbExecutable;
-        private System.Windows.Forms.CheckBox cbDriver;
         private System.Windows.Forms.CheckBox cbSystemFile;
         private System.Windows.Forms.Button btReadFile;
 

@@ -39,11 +39,6 @@
             this.btRemoveItem = new System.Windows.Forms.Button();
             this.groupBox1 = new System.Windows.Forms.GroupBox();
             this.groupBox2 = new System.Windows.Forms.GroupBox();
-            this.label4 = new System.Windows.Forms.Label();
-            this.label3 = new System.Windows.Forms.Label();
-            this.tbDeviceID = new System.Windows.Forms.TextBox();
-            this.tbManufacturerID = new System.Windows.Forms.TextBox();
-            this.label2 = new System.Windows.Forms.Label();
             this.label1 = new System.Windows.Forms.Label();
             this.tbExtention = new System.Windows.Forms.TextBox();
             this.tbFileName = new System.Windows.Forms.TextBox();
@@ -157,61 +152,15 @@
             // 
             // groupBox2
             // 
-            this.groupBox2.Controls.Add(this.label4);
-            this.groupBox2.Controls.Add(this.label3);
-            this.groupBox2.Controls.Add(this.tbDeviceID);
-            this.groupBox2.Controls.Add(this.tbManufacturerID);
-            this.groupBox2.Controls.Add(this.label2);
             this.groupBox2.Controls.Add(this.label1);
             this.groupBox2.Controls.Add(this.tbExtention);
             this.groupBox2.Controls.Add(this.tbFileName);
             this.groupBox2.Location = new System.Drawing.Point(9, 19);
             this.groupBox2.Name = "groupBox2";
-            this.groupBox2.Size = new System.Drawing.Size(200, 104);
+            this.groupBox2.Size = new System.Drawing.Size(233, 104);
             this.groupBox2.TabIndex = 0;
             this.groupBox2.TabStop = false;
             this.groupBox2.Text = "Name";
-            // 
-            // label4
-            // 
-            this.label4.AutoSize = true;
-            this.label4.Location = new System.Drawing.Point(113, 62);
-            this.label4.Name = "label4";
-            this.label4.Size = new System.Drawing.Size(42, 13);
-            this.label4.TabIndex = 1;
-            this.label4.Text = "dev ID:";
-            // 
-            // label3
-            // 
-            this.label3.AutoSize = true;
-            this.label3.Location = new System.Drawing.Point(6, 62);
-            this.label3.Name = "label3";
-            this.label3.Size = new System.Drawing.Size(44, 13);
-            this.label3.TabIndex = 1;
-            this.label3.Text = "man ID:";
-            // 
-            // tbDeviceID
-            // 
-            this.tbDeviceID.Location = new System.Drawing.Point(108, 78);
-            this.tbDeviceID.Name = "tbDeviceID";
-            this.tbDeviceID.Size = new System.Drawing.Size(83, 20);
-            this.tbDeviceID.TabIndex = 2;
-            // 
-            // tbManufacturerID
-            // 
-            this.tbManufacturerID.Location = new System.Drawing.Point(6, 78);
-            this.tbManufacturerID.Name = "tbManufacturerID";
-            this.tbManufacturerID.Size = new System.Drawing.Size(83, 20);
-            this.tbManufacturerID.TabIndex = 1;
-            // 
-            // label2
-            // 
-            this.label2.AutoSize = true;
-            this.label2.Location = new System.Drawing.Point(3, 42);
-            this.label2.Name = "label2";
-            this.label2.Size = new System.Drawing.Size(86, 13);
-            this.label2.TabIndex = 1;
-            this.label2.Text = "In case of driver:";
             // 
             // label1
             // 
@@ -361,11 +310,6 @@
         private System.Windows.Forms.TextBox tbFileName;
         private System.Windows.Forms.Label label1;
         private System.Windows.Forms.TextBox tbExtention;
-        private System.Windows.Forms.Label label4;
-        private System.Windows.Forms.Label label3;
-        private System.Windows.Forms.TextBox tbDeviceID;
-        private System.Windows.Forms.TextBox tbManufacturerID;
-        private System.Windows.Forms.Label label2;
         internal System.Windows.Forms.ComboBox cbEndian;
         private System.Windows.Forms.Button btAddDirectory;
         private System.Windows.Forms.GroupBox groupBox3;

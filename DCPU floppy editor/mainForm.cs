@@ -147,10 +147,8 @@ namespace DCPU_floppy_editor
                 {
                     {
                         cFileSystemItem Temp = FileSystem.GetItemByIndex((int)dgItemsInWorkingDir.Rows[dgItemsInWorkingDir.SelectedRows[0].Index].Cells["Index"].Value);
-                        tbDeviceID.Text = Temp.Metadata.GetDevIDstring();
                         tbExtention.Text = Temp.Metadata.GetExtention();
                         tbFileName.Text = Temp.Metadata.GetName();
-                        tbManufacturerID.Text = Temp.Metadata.GetManIDstring();
                     }
                 }
                 else
@@ -162,10 +160,8 @@ namespace DCPU_floppy_editor
         }
         private void ClearFileInfos()
         {
-            tbDeviceID.Text = "";
             tbExtention.Text = "";
             tbFileName.Text = "";
-            tbManufacturerID.Text = "";
         }
 
         private void dgItemsInWorkingDir_MouseDoubleClick(object sender, MouseEventArgs e)

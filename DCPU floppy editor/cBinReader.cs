@@ -171,7 +171,6 @@ namespace DCPU_floppy_editor
                 ItemToFill.SetFile(Newfile);
                 return true;
             }
-            return false;
         }
         internal cFileSystem GetFileSystem()
         {
