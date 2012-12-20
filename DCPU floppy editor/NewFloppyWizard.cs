@@ -84,12 +84,57 @@ namespace DCPU_floppy_editor
         {
             if (Bootloader.Count == 1)
             {
-                return HeaderVerifier.VerifyFHAT16BootSector(Bootloader[0], (ushort)Kernel.Count, (ushort)Master.Floppy.Sectors.Length);
+                return HeaderVerifier.VerifyFHAT16BootSector(Bootloader[0], (ushort)Kernel.Count, (ushort)Master.Floppy.Sectors.Length, true);
             }
             else
             {
                 MessageBox.Show("Bootloader is too big");
                 return false;
+            }
+        }
+
+        private void btBootableFloppy_Click(object sender, EventArgs e)
+        {
+            gbFloppyType.Visible = false;
+            gbBootableFloppy.Visible = true;
+            //gbBootableFloppy.Location.X = 1;
+            //gbBootableFloppy.Location.Y = 2;
+            Master.Floppy = new cFloppy(1440);
+            Master.FileSystem = new cFileSystem(DiskType.Bootable, Master.Floppy);
+        }
+
+        private void btNonBootableFloppy_Click(object sender, EventArgs e)
+        {
+            gbFloppyType.Visible = false;
+            gbNonBootFloppy.Visible = true;
+            //gbNonBootFloppy.Location.X = 1;
+            //gbNonBootFloppy.Location.Y = 2;
+        }
+
+        private void btCreateNonBootFloppy_Click(object sender, EventArgs e)
+        {
+            try
+            {
+                int NumSectors = Convert.ToInt32(tbNumSectors.Text);
+                Master.Floppy = new cFloppy(NumSectors);
+                Master.FileSystem = new cFileSystem(DiskType.NonBootable, Master.Floppy);
+
+                Master.FileSystem.FAT.CreateBootSector(tbMediaName.Text, NumSectors);
+
+                this.DialogResult = DialogResult.OK;
+                this.Close();
+            }
+            catch
+            {
+                MessageBox.Show("Error while creating the floppy");
+            }
+        }
+
+        private void tbMediaName_KeyPress(object sender, KeyPressEventArgs e)
+        {
+            if (e.KeyChar == (char)Keys.Enter)
+            {
+                btCreateNonBootFloppy_Click(sender, new EventArgs());
             }
         }
 

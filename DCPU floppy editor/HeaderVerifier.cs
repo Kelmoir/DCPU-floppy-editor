@@ -8,9 +8,14 @@ namespace DCPU_floppy_editor
 {
     static class HeaderVerifier
     {
-        static public bool VerifyFHAT16BootSector(cSector Bootloader, ushort KernelSectorSize, ushort FloppyLength)
+        static public bool VerifyFHAT16BootSector(cSector Bootloader, ushort KernelSectorSize, ushort FloppyLength, bool IsBootable)
         {
-            if (Bootloader.Memory[0] != 0xC382)      //is the Bootable Flag correct?
+            if (IsBootable && Bootloader.Memory[0] != 0xC382)      //is the Bootable Flag correct?
+            {
+                MessageBox.Show("Incorrect Bootflag");
+                return false;
+            }
+            else if (!IsBootable && Bootloader.Memory[0] != 0x0000)
             {
                 MessageBox.Show("Incorrect Bootflag");
                 return false;

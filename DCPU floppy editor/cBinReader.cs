@@ -60,7 +60,7 @@ namespace DCPU_floppy_editor
 
             if (!ObtainBootSector())
                 return false;
-            if (!VerifyBootSector())
+            if (!VerifyBootSector(IsBootable(InputFloppy)))
                 return false;
             ObtainEntireHeader();
             if (!InputFAT.CalcIndixes())
@@ -83,9 +83,9 @@ namespace DCPU_floppy_editor
             return true;
         }
 
-        private bool VerifyBootSector()
+        private bool VerifyBootSector(bool IsBootable)
         {
-            return HeaderVerifier.VerifyFHAT16BootSector(OutputFloppy.Sectors[0], OutputFloppy.Sectors[0].Memory[8], (ushort)OutputFloppy.Sectors.Length);
+            return HeaderVerifier.VerifyFHAT16BootSector(OutputFloppy.Sectors[0], OutputFloppy.Sectors[0].Memory[8], (ushort)OutputFloppy.Sectors.Length, IsBootable);
         }
         private void ObtainEntireHeader()
         {

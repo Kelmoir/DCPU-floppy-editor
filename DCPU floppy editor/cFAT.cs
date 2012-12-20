@@ -164,5 +164,38 @@ namespace DCPU_floppy_editor
         {
             return SectorSize;
         }
+
+        internal string TrimMediaName(string MediaName)
+        {
+            if (MediaName.Length > 12)
+                MediaName = MediaName.Substring(0, 12);
+            while (MediaName.Length < 12)
+                MediaName += " ";
+            return MediaName;
+        }
+
+        internal void CreateBootSector(string MediaName, int NumSectors)
+        {
+            cSector BootSector = new cSector();
+            BootSector.Memory[0] = 0;
+            BootSector.Memory[1] = 0xFA16;
+            ushort[] Temp = cFileSigConverter.ConvertToMediaName(TrimMediaName(MediaName));
+            BootSector.Memory[2] = Temp[0];
+            BootSector.Memory[3] = Temp[1];
+            BootSector.Memory[4] = Temp[2];
+            BootSector.Memory[5] = Temp[3];
+            BootSector.Memory[6] = Temp[4];
+            BootSector.Memory[7] = Temp[5];
+            BootSector.Memory[8] = 1;
+            BootSector.Memory[9] = 1;
+            BootSector.Memory[10] = 512;
+            BootSector.Memory[11] = (ushort)NumSectors;
+            Temp = cFileSigConverter.CreateSerial();
+            BootSector.Memory[12] = Temp[0];
+            BootSector.Memory[13] = Temp[1];
+            BootSector.Memory[14] = Temp[2];
+            BootSector.Memory[15] = Temp[3];
+            Floppy.Sectors[0] = BootSector;
+        }
     }
 }

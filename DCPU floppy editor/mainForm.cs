@@ -14,7 +14,7 @@ namespace DCPU_floppy_editor
 
         internal cFloppy Floppy;
         bool FloppyChanged = false;
-        cFileSystem FileSystem;
+        internal cFileSystem FileSystem;
         DataTable ItemsInWorkingDirectory;
         int LastSelectedIndex;
 
@@ -32,15 +32,12 @@ namespace DCPU_floppy_editor
 
         private void NewFloppyToolStripMenuItem_Click(object sender, EventArgs e)
         {
-            Floppy = new cFloppy(1440);
-			FileSystem = new cFileSystem(DiskType.Bootable, Floppy);
             NewFloppyWizard Wizard = new NewFloppyWizard(this);
 			if (Wizard.ShowDialog() == DialogResult.OK)
 			{
 				if (FileSystem.FAT.InitFat())
 				{
 					FloppyChanged = true;
-                    UpdateDirectoryView();
 				}
 				else
 				{
@@ -48,6 +45,7 @@ namespace DCPU_floppy_editor
 					Floppy = new cFloppy(0);							//make sure, nothing happens
 					FileSystem = new cFileSystem(DiskType.NonBootable, Floppy);
 				}
+                UpdateDirectoryView();
                 UpdateDiskUsage();
 			}
         }

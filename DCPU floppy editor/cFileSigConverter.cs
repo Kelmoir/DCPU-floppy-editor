@@ -67,5 +67,29 @@ namespace DCPU_floppy_editor
 			Result[1] = (ushort)(Convert.ToByte(Temp[2]) << 8);
 			return Result;
 		}
+        static internal ushort[] ConvertToMediaName(string MediaName)
+        {
+            ushort[] Result = new ushort[6];
+            char[] Temp = MediaName.ToCharArray();
+            Result[0] = (ushort)(Convert.ToByte(Temp[0]) << 8 | Convert.ToByte(Temp[1]));
+            Result[1] = (ushort)(Convert.ToByte(Temp[2]) << 8 | Convert.ToByte(Temp[3]));
+            Result[2] = (ushort)(Convert.ToByte(Temp[4]) << 8 | Convert.ToByte(Temp[5]));
+            Result[3] = (ushort)(Convert.ToByte(Temp[6]) << 8 | Convert.ToByte(Temp[7]));
+            Result[4] = (ushort)(Convert.ToByte(Temp[8]) << 8 | Convert.ToByte(Temp[9]));
+            Result[5] = (ushort)(Convert.ToByte(Temp[10]) << 8 | Convert.ToByte(Temp[11]));
+            return Result;
+        }
+        static internal ushort[] CreateSerial()
+        {
+            UInt64 Temp;
+            Random Rand = new Random();
+            Temp = (UInt64)(Rand.NextDouble() * Math.Pow(2, 64));
+            ushort[] Result = new ushort[4];
+            Result[0] = (ushort)Temp;
+            Result[1] = (ushort)(Temp >> 16);
+            Result[2] = (ushort)(Temp >> 32);
+            Result[3] = (ushort)(Temp >> 48);
+            return Result;
+        }
 	}
 }
