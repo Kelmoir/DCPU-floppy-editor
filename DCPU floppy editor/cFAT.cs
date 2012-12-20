@@ -179,7 +179,7 @@ namespace DCPU_floppy_editor
             cSector BootSector = new cSector();
             BootSector.Memory[0] = 0;
             BootSector.Memory[1] = 0xFA16;
-            ushort[] Temp = cFileSigConverter.ConvertToMediaName(TrimMediaName(MediaName));
+            ushort[] Temp = cFileSigConverter.ConvertToMediaNameSig(TrimMediaName(MediaName));
             BootSector.Memory[2] = Temp[0];
             BootSector.Memory[3] = Temp[1];
             BootSector.Memory[4] = Temp[2];
@@ -196,6 +196,60 @@ namespace DCPU_floppy_editor
             BootSector.Memory[14] = Temp[2];
             BootSector.Memory[15] = Temp[3];
             Floppy.Sectors[0] = BootSector;
+        }
+        internal void ReplaceKernel(List<cSector> NewKernel)
+        {
+            ChangeNumKernelSectorsAndRelocateFAT((ushort)NewKernel.Count);
+            for (int i = 0; i < NewKernel.Count; i++)
+            {
+                Floppy.Sectors[i + 1] = NewKernel[i];
+            }
+        }
+        internal void ChangeNumKernelSectorsAndRelocateFAT(ushort NewNumber)
+        {
+            cSector[] Temp = new cSector[NumFatSectors];
+            for (int i = 0; i < NumFatSectors; i++)
+            {
+                Temp[i] = Floppy.Sectors[i + FatIndex];
+            }
+            FatIndex = (ushort)(NewNumber + 1);
+            Floppy.Sectors[0].Memory[8] = FatIndex;
+            for (int i = 0; i < NumFatSectors; i++)
+            {
+                Floppy.Sectors[i + FatIndex] = Temp[i];
+            }
+        }
+        internal void SetMediaName(string NewMediaName)
+        {
+            ushort[] Temp = cFileSigConverter.ConvertToMediaNameSig(TrimMediaName(NewMediaName));
+            Floppy.Sectors[0].Memory[2] = Temp[0];
+            Floppy.Sectors[0].Memory[3] = Temp[1];
+            Floppy.Sectors[0].Memory[4] = Temp[2];
+            Floppy.Sectors[0].Memory[5] = Temp[3];
+            Floppy.Sectors[0].Memory[6] = Temp[4];
+            Floppy.Sectors[0].Memory[7] = Temp[5];
+        }
+
+        internal bool IsBootable()
+        {
+            return (Mode == DiskType.Bootable);
+        }
+
+        internal string GetMediaName()
+        {
+            try
+            {
+                ushort[] Temp = new ushort[6];
+                for (int i = 0; i < 6; i++)
+                {
+                    Temp[i] = Floppy.Sectors[0].Memory[i + 2];
+                }
+                return cFileSigConverter.ConvertToMediaName(Temp);
+            }
+            catch
+            {
+                return "";
+            }
         }
     }
 }

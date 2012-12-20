@@ -52,5 +52,17 @@ namespace DCPU_floppy_editor
 				}
 			}
 		}
+
+        internal bool IsBootable()
+        {
+            try
+            {
+                return (Sectors[0].Memory[0] == 0xC382);
+            }
+            catch
+            {
+                return false;
+            }
+        }
     }
 }

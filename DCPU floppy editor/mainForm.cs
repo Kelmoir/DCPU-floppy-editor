@@ -147,6 +147,8 @@ namespace DCPU_floppy_editor
                     tbFileName.Text = Temp.Metadata.GetName();
                     cbHidden.Checked = Temp.Metadata.Flags.Hidden;
                     cbReadOnly.Checked = Temp.Metadata.Flags.ReadOnly;
+                    btChangeKernel.Visible = FileSystem.FAT.IsBootable();
+                    tbMediaName.Text = FileSystem.GetMediaName();
                     if (!Temp.IsDirectory())
                     {
                         cbSystemFile.Checked = Temp.Metadata.Flags.SystemFile;
@@ -240,6 +242,21 @@ namespace DCPU_floppy_editor
             cFileSystemItem Temp = FileSystem.GetItemByIndex((int)dgItemsInWorkingDir.Rows[dgItemsInWorkingDir.SelectedRows[0].Index].Cells["Index"].Value);
             Temp.ReadFile(cbEndian.SelectedIndex);
             UpdateDiskUsage();
+        }
+
+        private void button1_Click(object sender, EventArgs e)
+        {
+            FileSystem.FAT.SetMediaName(tbMediaName.Text);
+        }
+
+        private void btChangeKernel_Click(object sender, EventArgs e)
+        {
+            cBinLoader Loader = new cBinLoader();
+            if (Loader.LoadBin(cbEndian.SelectedIndex, FileType.Kernel))
+            {
+                FileSystem.FAT.ReplaceKernel(Loader.GetFile(FileType.Kernel));
+                UpdateDiskUsage();
+            }
         }
 
 

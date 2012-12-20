@@ -103,5 +103,10 @@ namespace DCPU_floppy_editor
                 return false;
             }
         }
+
+        internal string GetMediaName()
+        {
+            return FAT.GetMediaName();
+        }
     }
 }

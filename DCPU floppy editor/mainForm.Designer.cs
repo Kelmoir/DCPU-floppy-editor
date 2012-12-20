@@ -57,6 +57,10 @@
             this.groupBox4 = new System.Windows.Forms.GroupBox();
             this.lbSectorsUsed = new System.Windows.Forms.Label();
             this.pbMemoryUsage = new System.Windows.Forms.ProgressBar();
+            this.groupBox6 = new System.Windows.Forms.GroupBox();
+            this.tbMediaName = new System.Windows.Forms.TextBox();
+            this.button1 = new System.Windows.Forms.Button();
+            this.btChangeKernel = new System.Windows.Forms.Button();
             this.menuStrip1.SuspendLayout();
             this.Endianess.SuspendLayout();
             this.groupBox1.SuspendLayout();
@@ -65,6 +69,7 @@
             this.groupBox3.SuspendLayout();
             ((System.ComponentModel.ISupportInitialize)(this.dgItemsInWorkingDir)).BeginInit();
             this.groupBox4.SuspendLayout();
+            this.groupBox6.SuspendLayout();
             this.SuspendLayout();
             // 
             // menuStrip1
@@ -90,21 +95,21 @@
             // NewFloppyToolStripMenuItem
             // 
             this.NewFloppyToolStripMenuItem.Name = "NewFloppyToolStripMenuItem";
-            this.NewFloppyToolStripMenuItem.Size = new System.Drawing.Size(142, 22);
+            this.NewFloppyToolStripMenuItem.Size = new System.Drawing.Size(152, 22);
             this.NewFloppyToolStripMenuItem.Text = " New Floppy";
             this.NewFloppyToolStripMenuItem.Click += new System.EventHandler(this.NewFloppyToolStripMenuItem_Click);
             // 
             // openFloppyToolStripMenuItem
             // 
             this.openFloppyToolStripMenuItem.Name = "openFloppyToolStripMenuItem";
-            this.openFloppyToolStripMenuItem.Size = new System.Drawing.Size(142, 22);
+            this.openFloppyToolStripMenuItem.Size = new System.Drawing.Size(152, 22);
             this.openFloppyToolStripMenuItem.Text = "Open Floppy";
             this.openFloppyToolStripMenuItem.Click += new System.EventHandler(this.openFloppyToolStripMenuItem_Click);
             // 
             // saveFloppyToolStripMenuItem
             // 
             this.saveFloppyToolStripMenuItem.Name = "saveFloppyToolStripMenuItem";
-            this.saveFloppyToolStripMenuItem.Size = new System.Drawing.Size(142, 22);
+            this.saveFloppyToolStripMenuItem.Size = new System.Drawing.Size(152, 22);
             this.saveFloppyToolStripMenuItem.Text = "Save Floppy";
             this.saveFloppyToolStripMenuItem.Click += new System.EventHandler(this.saveFloppyToolStripMenuItem_Click);
             // 
@@ -363,11 +368,51 @@
             this.pbMemoryUsage.Size = new System.Drawing.Size(236, 23);
             this.pbMemoryUsage.TabIndex = 0;
             // 
+            // groupBox6
+            // 
+            this.groupBox6.Controls.Add(this.button1);
+            this.groupBox6.Controls.Add(this.tbMediaName);
+            this.groupBox6.Location = new System.Drawing.Point(12, 346);
+            this.groupBox6.Name = "groupBox6";
+            this.groupBox6.Size = new System.Drawing.Size(248, 48);
+            this.groupBox6.TabIndex = 10;
+            this.groupBox6.TabStop = false;
+            this.groupBox6.Text = "Media Name";
+            // 
+            // tbMediaName
+            // 
+            this.tbMediaName.Location = new System.Drawing.Point(9, 22);
+            this.tbMediaName.Name = "tbMediaName";
+            this.tbMediaName.Size = new System.Drawing.Size(112, 20);
+            this.tbMediaName.TabIndex = 11;
+            // 
+            // button1
+            // 
+            this.button1.Location = new System.Drawing.Point(127, 13);
+            this.button1.Name = "button1";
+            this.button1.Size = new System.Drawing.Size(112, 29);
+            this.button1.TabIndex = 12;
+            this.button1.Text = "Change media name";
+            this.button1.UseVisualStyleBackColor = true;
+            this.button1.Click += new System.EventHandler(this.button1_Click);
+            // 
+            // btChangeKernel
+            // 
+            this.btChangeKernel.Location = new System.Drawing.Point(21, 400);
+            this.btChangeKernel.Name = "btChangeKernel";
+            this.btChangeKernel.Size = new System.Drawing.Size(112, 37);
+            this.btChangeKernel.TabIndex = 12;
+            this.btChangeKernel.Text = "Change kernel";
+            this.btChangeKernel.UseVisualStyleBackColor = true;
+            this.btChangeKernel.Click += new System.EventHandler(this.btChangeKernel_Click);
+            // 
             // mainForm
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
             this.ClientSize = new System.Drawing.Size(628, 582);
+            this.Controls.Add(this.btChangeKernel);
+            this.Controls.Add(this.groupBox6);
             this.Controls.Add(this.groupBox4);
             this.Controls.Add(this.Endianess);
             this.Controls.Add(this.groupBox3);
@@ -392,6 +437,8 @@
             ((System.ComponentModel.ISupportInitialize)(this.dgItemsInWorkingDir)).EndInit();
             this.groupBox4.ResumeLayout(false);
             this.groupBox4.PerformLayout();
+            this.groupBox6.ResumeLayout(false);
+            this.groupBox6.PerformLayout();
             this.ResumeLayout(false);
             this.PerformLayout();
 
@@ -428,6 +475,10 @@
         private System.Windows.Forms.CheckBox cbHidden;
         private System.Windows.Forms.CheckBox cbReadOnly;
         private System.Windows.Forms.CheckBox cbArchive;
+        private System.Windows.Forms.GroupBox groupBox6;
+        private System.Windows.Forms.Button button1;
+        private System.Windows.Forms.TextBox tbMediaName;
+        private System.Windows.Forms.Button btChangeKernel;
     }
 }
 
